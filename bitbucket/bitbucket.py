@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # git+git://github.com/Sheeprider/Py-BitBucket.git
 
-__version__ = '0.1'
 __all__ = ['Bitbucket',]
 
 import json
