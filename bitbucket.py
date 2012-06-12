@@ -8,8 +8,11 @@ import json
 from requests import Request
 
 class Bitbucket(object):
-  """ Bitbucket is an abstraction class for bitbucket API.
+  """ This class lets you interact with the bitbucket public API.
       It depends on Requests.
+
+      Curently, only repositories and services (hooks) related functionalities
+      are available.
   """
   def __init__(self, username='', password='', repo_name_or_slug=''):
     self.username = username
@@ -90,18 +93,44 @@ class Bitbucket(object):
     response = self.dispatch('GET', url)
     if response:
       return json.loads(response[1])['repositories']
-  def own_repos(self):
+  def get_repositories(self):
     """ Return own repositories.
     """
-    username = self.username
-    url = self.url('GET_USER', username=username)
+    url = self.url('GET_USER', username=self.username)
     response = self.dispatch('GET', url, auth=self.auth)
     if response:
       return json.loads(response[1])['repositories']
+  def get_repository(self, repo_slug=None):
+    """ Get a single repository on Bitbucket and return it."""
+    repo_slug = repo_slug or self.repo_slug or ''
+    url = self.url('GET_REPO', username=self.username, repo_slug=repo_slug)
+    response = self.dispatch('GET', url, auth=self.auth)
+    if response:
+      return json.loads(response[1])
+  def get_tags(self, repo_slug=None):
+    """ Get a single repository on Bitbucket and return it."""
+    repo_slug = repo_slug or self.repo_slug or ''
+    url = self.url('GET_TAGS', username=self.username, repo_slug=repo_slug)
+    response = self.dispatch('GET', url, auth=self.auth)
+    if response:
+      return json.loads(response[1])
+  def get_branches(self, repo_slug=None):
+    """ Get a single repository on Bitbucket and return it."""
+    repo_slug = repo_slug or self.repo_slug or ''
+    url = self.url('GET_BRANCHES', username=self.username, repo_slug=repo_slug)
+    response = self.dispatch('GET', url, auth=self.auth)
+    if response:
+      return json.loads(response[1])
   def create_repository(self, repo_name, scm='git', private=True):
     """ Creates a new repository on own Bitbucket account and return it."""
     url = self.url('CREATE_REPO')
     response = self.dispatch('POST', url, auth=self.auth, name=repo_name, scm=scm, is_private=private)
+    if response:
+      return json.loads(response[1])
+  def update_repository(self, repo_slug=None, **kwargs):
+    """ Updates repository on own Bitbucket account and return it."""
+    url = self.url('UPDATE_REPO', username=self.username, repo_slug=repo_slug)
+    response = self.dispatch('PUT', url, self.auth, **kwargs)
     if response:
       return json.loads(response[1])
   def delete_repository(self, repo_slug=None):
@@ -166,7 +195,10 @@ class Bitbucket(object):
     # 'SEARCH_REPO': 'repositories/?name=%(search)s',
     # Set repo
     'CREATE_REPO' :'repositories/',
-    # 'UPDATE_REPO' :'repositories/%(username)s/%(repo_slug)s/',
+    'GET_REPO' :'repositories/%(username)s/%(repo_slug)s/',
+    'GET_TAGS' :'repositories/%(username)s/%(repo_slug)s/tags/',
+    'GET_BRANCHES' :'repositories/%(username)s/%(repo_slug)s/branches/',
+    'UPDATE_REPO' :'repositories/%(username)s/%(repo_slug)s/',
     'DELETE_REPO' :'repositories/%(username)s/%(repo_slug)s/',
     # Get services (hooks)
     'GET_SERVICE': 'repositories/%(username)s/%(repo_slug)s/services/%(service_id)s/',
