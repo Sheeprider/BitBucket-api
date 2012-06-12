@@ -9,4 +9,5 @@ setup(
   author_email='baptiste@smoothie-creative.com',
   url='https://github.com/Sheeprider/Py-BitBucket',
   py_modules=['bitbucket'],
+  licence='GPL',
   )
