@@ -23,6 +23,10 @@ class Bitbucket(object):
   # = Utilities =
   # =============
   def dispatch(self, method, url, auth=None, **kwargs):
+    """ Send HTTP request, with given method,
+        credentials and data to the given URL,
+        and return the status code and the result on success.
+    """
     r = Request(
       method=method,
       url=url,
@@ -34,10 +38,12 @@ class Bitbucket(object):
       return False
 
   def url(self, action, **kwargs):
+    """ Construct and return the URL for a specific API service. """
     # TODO : should be static method ?
     return self.URLS['BASE'] % self.URLS[action] % kwargs
   @property
   def auth(self):
+    """ Return credentials for current Bitbucket user. """
     return (self.username, self.password)
 
   def username():
@@ -75,7 +81,7 @@ class Bitbucket(object):
   # =======
   # = API =
   # =======
-  def user(self, username=None):
+  def get_user(self, username=None):
     """ Returns user informations.
         If username is not defined, tries to return own informations.
     """
