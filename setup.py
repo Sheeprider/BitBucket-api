@@ -7,6 +7,7 @@ setup(
   name='bitbucket',
   version=bitbucket.__version__,
   description='Bitbucket API',
+  long_description=open('README').read()
   author='Baptiste Millou',
   author_email='baptiste@smoothie-creative.com',
   url='https://github.com/Sheeprider/Py-BitBucket',
