@@ -20,5 +20,7 @@ setup(
     'License :: OSI Approved :: ISC License (ISCL)',
     'Programming Language :: Python',
     'Natural Language :: English',
+    'Operating System :: OS Independent',
+    'Topic :: Software Development :: Libraries :: Python Modules',
   ],
 )
