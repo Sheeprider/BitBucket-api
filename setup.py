@@ -4,7 +4,7 @@ from distutils.core import setup
 import bitbucket
 
 setup(
-  name='bitbucket',
+  name='bitbucket-api',
   version=bitbucket.__version__,
   description='Bitbucket API',
   long_description=open('README').read(),
