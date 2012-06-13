@@ -12,6 +12,13 @@ setup(
   author_email='baptiste@smoothie-creative.com',
   url='https://github.com/Sheeprider/Py-BitBucket',
   packages=['bitbucket'],
-  license='GPL',
-  install_requires=open('requirements.txt').readlines(),
-  )
+  license=open('LICENSE').read(),
+  # install_requires=open('requirements.txt').readlines(),
+  classifiers=[
+    'Development Status :: 3 - Alpha',
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: ISC License (ISCL)',
+    'Programming Language :: Python',
+    'Natural Language :: English',
+  ],
+)
