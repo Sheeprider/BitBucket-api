@@ -3,6 +3,8 @@
 
 __all__ = ['Bitbucket',]
 
+from tempfile import NamedTemporaryFile
+from zipfile import ZipFile
 import json
 
 from requests import Request
@@ -18,6 +20,7 @@ class Bitbucket(object):
     self.username = username
     self.password = password
     self.repo_slug = repo_name_or_slug.lower().replace(r'[^a-z0-9_-]+', '-')
+    self.repo_tree = {}
 
   # =============
   # = Utilities =
@@ -36,11 +39,37 @@ class Bitbucket(object):
       return (r.response.status_code, r.response.text)
     else:
       return False
-
   def url(self, action, **kwargs):
     """ Construct and return the URL for a specific API service. """
     # TODO : should be static method ?
     return self.URLS['BASE'] % self.URLS[action] % kwargs
+  def get_files_in_dir(self, repo_slug=None, dir='/'):
+    repo_slug = repo_slug or self.repo_slug or ''
+    dir = dir.lstrip('/')
+    url = self.url(
+      'GET_ARCHIVE',
+      username=self.username,
+      repo_slug=repo_slug,
+      format='src')
+    dir_url = url + dir
+    response = self.dispatch('GET', dir_url, auth=self.auth)
+    if response and response[0] == 200:
+      repo_tree = json.loads(response[1])
+      url = self.url(
+        'GET_ARCHIVE',
+        username=self.username,
+        repo_slug=repo_slug,
+        format='raw')
+      # Download all files in dir
+      for file in repo_tree['files']:
+        file_url = url + '/'.join((file['path'],))
+        response = self.dispatch('GET', file_url, auth=self.auth)
+        self.repo_tree[file['path']] = response[1]
+      # recursively download in dirs
+      for directory in repo_tree['directories']:
+        dir_path = '/'.join((dir, directory))
+        self.get_files_in_dir(repo_slug=repo_slug, dir=dir_path)
+
   @property
   def auth(self):
     """ Return credentials for current Bitbucket user. """
@@ -189,6 +218,17 @@ class Bitbucket(object):
     response = self.dispatch('GET', url, auth=self.auth)
     if response:
       return json.loads(response[1])
+  def get_archive(self, repo_slug=None, format='zip', prefix=''):
+    """ Get one of your repositories and return it as an archive.
+    """
+    prefix = '%s'.lstrip('/') % prefix
+    self.get_files_in_dir(repo_slug=repo_slug, dir='/')
+    with ZipFile(NamedTemporaryFile(), 'w') as archive:
+      for name, file in self.repo_tree.items():
+        with NamedTemporaryFile() as temp_file:
+          temp_file.write(file)
+          archive.write(temp_file.name, name)
+    return archive
 
   #  ========
   #  = URLs =
@@ -197,6 +237,8 @@ class Bitbucket(object):
     'BASE': 'https://api.bitbucket.org/1.0/%s',
     # Get user profile and repos
     'GET_USER': 'users/%(username)s/',
+    # Get archive
+    'GET_ARCHIVE': 'repositories/%(username)s/%(repo_slug)s/%(format)s/master/',
     # Search repo
     # 'SEARCH_REPO': 'repositories/?name=%(search)s',
     # Set repo
