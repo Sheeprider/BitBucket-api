@@ -219,7 +219,10 @@ class Bitbucket(object):
     if response:
       return json.loads(response[1])
   def get_archive(self, repo_slug=None, format='zip', prefix=''):
-    """ Get one of your repositories and return it as an archive.
+    """ Get one of your repositories and compress it as an archive.
+        Return the path of the archive.
+
+        format parameter is curently not supported.
     """
     prefix = '%s'.lstrip('/') % prefix
     self.get_files_in_dir(repo_slug=repo_slug, dir='/')
@@ -229,7 +232,7 @@ class Bitbucket(object):
           with NamedTemporaryFile() as temp_file:
             temp_file.write(file)
             zip_archive.write(temp_file.name, prefix + name)
-    return archive
+    return archive.name
 
   #  ========
   #  = URLs =
