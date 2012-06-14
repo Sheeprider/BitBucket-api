@@ -223,11 +223,12 @@ class Bitbucket(object):
     """
     prefix = '%s'.lstrip('/') % prefix
     self.get_files_in_dir(repo_slug=repo_slug, dir='/')
-    with ZipFile(NamedTemporaryFile(), 'w') as archive:
-      for name, file in self.repo_tree.items():
-        with NamedTemporaryFile() as temp_file:
-          temp_file.write(file)
-          archive.write(temp_file.name, name)
+    with NamedTemporaryFile(delete=False) as archive:
+      with ZipFile(archive, 'w') as zip_archive:
+        for name, file in self.repo_tree.items():
+          with NamedTemporaryFile() as temp_file:
+            temp_file.write(file)
+            zip_archive.write(temp_file.name, prefix + name)
     return archive
 
   #  ========
