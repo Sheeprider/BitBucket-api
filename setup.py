@@ -13,7 +13,7 @@ setup(
   url='https://github.com/Sheeprider/Py-BitBucket',
   packages=['bitbucket'],
   license=open('LICENSE').read(),
-  install_requires=['requests',],
+  install_requires=['requests', ],
   classifiers=[
     'Development Status :: 3 - Alpha',
     'Intended Audience :: Developers',
