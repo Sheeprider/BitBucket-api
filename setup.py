@@ -10,7 +10,7 @@ setup(
   long_description=open('README').read(),
   author='Baptiste Millou',
   author_email='baptiste@smoothie-creative.com',
-  url='https://github.com/Sheeprider/Py-BitBucket',
+  url='https://github.com/Sheeprider/BitBucket-api',
   packages=['bitbucket'],
   license=open('LICENSE').read(),
   install_requires=['requests', ],
