@@ -51,7 +51,7 @@ class Bitbucket(object):
                         pass
                 return (True, text)
             elif status >= 300 and  status < 400:
-                return (False, 'Unauthorized acces, '
+                return (False, 'Unauthorized access, '
                     'please check your credentials.')
             elif status >= 400 and  status < 500:
                 return (False, 'Service not found.')
@@ -202,7 +202,7 @@ class Bitbucket(object):
     def update_repository(self, repo_slug=None, **kwargs):
         """ Updates repository on own Bitbucket account and return it."""
         url = self.url('UPDATE_REPO', username=self.username, repo_slug=repo_slug)
-        return self.dispatch('PUT', url, self.auth, **kwargs)
+        return self.dispatch('PUT', url, auth=self.auth, **kwargs)
 
     def delete_repository(self, repo_slug=None):
         """ Delete a repository on own Bitbucket account.
