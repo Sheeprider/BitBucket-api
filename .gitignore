@@ -3,3 +3,9 @@ dist/
 *.pyc
 
 MANIFEST
+
+.gitignore.swp
+.project
+.pydevproject
+.settings/
+build/
