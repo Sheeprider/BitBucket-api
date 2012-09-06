@@ -295,6 +295,63 @@ class Bitbucket(object):
         url = self.url('DELETE_SSH_KEY', key_id=key_id)
         return self.dispatch('DELETE', url, auth=self.auth)
 
+    def get_issues(self, repo_slug=None, params=None):
+        """ Get issues from one of your repositories.
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('GET_ISSUES', username=self.username, repo_slug=repo_slug)
+        return self.dispatch('GET', url, auth=self.auth, params=params)
+
+    def get_issue(self, issue_id, repo_slug=None):
+        """ Get an issue from one of your repositories.
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('GET_ISSUE', username=self.username, repo_slug=repo_slug, issue_id=issue_id)
+        return self.dispatch('GET', url, auth=self.auth)
+
+    def add_issue(self, repo_slug=None, **kwargs):
+        """ Add an issue to one of your repositories.
+            Each issue require a different set of attributes,
+            you can pass them as keyword arguments (attributename='attributevalue').
+            Attributes are:
+                title: The title of the new issue.
+                content: The content of the new issue.
+                component: The component associated with the issue.
+                milestone: The milestone associated with the issue.
+                version: The version associated with the issue.
+                responsible: The username of the person responsible for the issue.
+                status: The status of the issue (new, open, resolved, on hold, invalid, duplicate, or wontfix).
+                kind: The kind of issue (bug, enhancement, or proposal).
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('CREATE_ISSUE', username=self.username, repo_slug=repo_slug)
+        return self.dispatch('POST', url, auth=self.auth, **kwargs)
+
+    def update_issue(self, issue_id, repo_slug=None, **kwargs):
+        """ Update an issue to one of your repositories.
+            Each issue require a different set of attributes,
+            you can pass them as keyword arguments (attributename='attributevalue').
+            Attributes are:
+                title: The title of the new issue.
+                content: The content of the new issue.
+                component: The component associated with the issue.
+                milestone: The milestone associated with the issue.
+                version: The version associated with the issue.
+                responsible: The username of the person responsible for the issue.
+                status: The status of the issue (new, open, resolved, on hold, invalid, duplicate, or wontfix).
+                kind: The kind of issue (bug, enhancement, or proposal).
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('UPDATE_ISSUE', username=self.username, repo_slug=repo_slug, issue_id=issue_id)
+        return self.dispatch('PUT', url, auth=self.auth, **kwargs)
+
+    def delete_issue(self, issue_id, repo_slug=None):
+        """ Delete an issue from one of your repositories.
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('DELETE_ISSUE', username=self.username, repo_slug=repo_slug, issue_id=issue_id)
+        return self.dispatch('DELETE', url, auth=self.auth)
+
     #  ========
     #  = URLs =
     #  ========
@@ -325,6 +382,12 @@ class Bitbucket(object):
         'GET_SSH_KEY': 'ssh-keys/%(key_id)s',
         'SET_SSH_KEY': 'ssh-keys/',
         'DELETE_SSH_KEY': 'ssh-keys/%(key_id)s',
+        # Issues
+        'GET_ISSUES': 'repositories/%(username)s/%(repo_slug)s/issues/',
+        'GET_ISSUE':  'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
+        'CREATE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/',
+        'UPDATE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
+        'DELETE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
 
     }
 
