@@ -26,7 +26,7 @@ class Bitbucket(object):
     # =============
     # = Utilities =
     # =============
-    def dispatch(self, method, url, auth=None, **kwargs):
+    def dispatch(self, method, url, auth=None, params=None, **kwargs):
         """ Send HTTP request, with given method,
             credentials and data to the given URL,
             and return the status code and the result on success.
@@ -35,6 +35,7 @@ class Bitbucket(object):
             method=method,
             url=url,
             auth=auth,
+            params=params,
             data=kwargs)
         send = r.send()
         status = r.response.status_code
@@ -97,7 +98,7 @@ class Bitbucket(object):
         """ Return credentials for current Bitbucket user. """
         return (self.username, self.password)
 
-    def username():
+    def username(): #@NoSelf
         """Your username."""
         def fget(self):
             return self._username
@@ -110,7 +111,7 @@ class Bitbucket(object):
         return locals()
     username = property(**username())
 
-    def password():
+    def password(): #@NoSelf
         """Your password."""
         def fget(self):
                 return self._password
@@ -123,7 +124,7 @@ class Bitbucket(object):
         return locals()
     password = property(**password())
 
-    def repo_slug():
+    def repo_slug(): #@NoSelf
         """Your repository slug name."""
         def fget(self):
                 return self._repo_slug
