@@ -352,6 +352,53 @@ class Bitbucket(object):
         url = self.url('DELETE_ISSUE', username=self.username, repo_slug=repo_slug, issue_id=issue_id)
         return self.dispatch('DELETE', url, auth=self.auth)
 
+    def get_issue_comments(self, issue_id, repo_slug=None):
+        """ Get issue comments from one of your repositories.
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('GET_COMMENTS', username=self.username,
+                       repo_slug=repo_slug, issue_id=issue_id)
+        return self.dispatch('GET', url, auth=self.auth)
+
+    def get_issue_comment(self, issue_id, comment_id, repo_slug=None):
+        """ Get an issue from one of your repositories.
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('GET_COMMENT', username=self.username,
+                       repo_slug=repo_slug, issue_id=issue_id,
+                       comment_id=comment_id)
+        return self.dispatch('GET', url, auth=self.auth)
+
+    def add_issue_comment(self, issue_id, repo_slug=None, **kwargs):
+        """ Add an issue comment to one of your repositories.
+            Each issue comment require only the content data field
+            the system autopopulate the rest.
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('CREATE_COMMENT', username=self.username,
+                       repo_slug=repo_slug, issue_id=issue_id)
+        return self.dispatch('POST', url, auth=self.auth, **kwargs)
+
+    def update_issue_comment(self, issue_id, comment_id, repo_slug=None, **kwargs):
+        """ Update an issue comment in one of your repositories.
+            Each issue comment require only the content data field
+            the system autopopulate the rest.
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('UPDATE_COMMENT', username=self.username,
+                       repo_slug=repo_slug, issue_id=issue_id,
+                       comment_id=comment_id)
+        return self.dispatch('PUT', url, auth=self.auth, **kwargs)
+
+    def delete_issue_comment(self, issue_id, comment_id, repo_slug=None):
+        """ Delete an issue from one of your repositories.
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('DELETE_COMMENT', username=self.username,
+                       repo_slug=repo_slug, issue_id=issue_id,
+                       comment_id=comment_id)
+        return self.dispatch('DELETE', url, auth=self.auth)
+
     #  ========
     #  = URLs =
     #  ========
@@ -388,6 +435,12 @@ class Bitbucket(object):
         'CREATE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/',
         'UPDATE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
         'DELETE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
+        # Issue comments
+        'GET_COMMENTS': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/',
+        'GET_COMMENT':  'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
+        'CREATE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/',
+        'UPDATE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
+        'DELETE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
 
     }
 
