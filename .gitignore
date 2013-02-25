@@ -1,5 +1,6 @@
 env/
 dist/
 *.pyc
-
+*.sublime-project
 MANIFEST
+*.sublime-workspace

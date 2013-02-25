@@ -41,7 +41,7 @@ class Bitbucket(object):
         text = r.response.text
         error = r.response.error
         if send:
-            if status >= 200 and  status < 300:
+            if status >= 200 and status < 300:
                 if text:
                     try:
                         return (True, json.loads(text))
@@ -50,12 +50,12 @@ class Bitbucket(object):
                     except ValueError:
                         pass
                 return (True, text)
-            elif status >= 300 and  status < 400:
+            elif status >= 300 and status < 400:
                 return (False, 'Unauthorized access, '
                     'please check your credentials.')
-            elif status >= 400 and  status < 500:
+            elif status >= 400 and status < 500:
                 return (False, 'Service not found.')
-            elif status >= 500 and  status < 600:
+            elif status >= 500 and status < 600:
                 return (False, 'Server error.')
         else:
             return (False, error)
