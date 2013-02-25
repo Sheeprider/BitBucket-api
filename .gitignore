@@ -1,9 +1,13 @@
 env/
 dist/
 *.pyc
-*.sublime-project
 MANIFEST
+
+# Ignore Sublime Text project files
+*.sublime-project
 *.sublime-workspace
+
+# Ignore aptana and eclipse files
 .gitignore.swp
 .project
 .pydevproject
