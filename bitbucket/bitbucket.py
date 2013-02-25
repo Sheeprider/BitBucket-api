@@ -26,7 +26,7 @@ class Bitbucket(object):
     # =============
     # = Utilities =
     # =============
-    def dispatch(self, method, url, auth=None, **kwargs):
+    def dispatch(self, method, url, auth=None, params=None, **kwargs):
         """ Send HTTP request, with given method,
             credentials and data to the given URL,
             and return the status code and the result on success.
@@ -35,6 +35,7 @@ class Bitbucket(object):
             method=method,
             url=url,
             auth=auth,
+            params=params,
             data=kwargs)
         send = r.send()
         status = r.response.status_code
@@ -97,7 +98,7 @@ class Bitbucket(object):
         """ Return credentials for current Bitbucket user. """
         return (self.username, self.password)
 
-    def username():
+    def username(): #@NoSelf
         """Your username."""
         def fget(self):
             return self._username
@@ -110,7 +111,7 @@ class Bitbucket(object):
         return locals()
     username = property(**username())
 
-    def password():
+    def password(): #@NoSelf
         """Your password."""
         def fget(self):
                 return self._password
@@ -123,7 +124,7 @@ class Bitbucket(object):
         return locals()
     password = property(**password())
 
-    def repo_slug():
+    def repo_slug(): #@NoSelf
         """Your repository slug name."""
         def fget(self):
                 return self._repo_slug
@@ -294,6 +295,110 @@ class Bitbucket(object):
         url = self.url('DELETE_SSH_KEY', key_id=key_id)
         return self.dispatch('DELETE', url, auth=self.auth)
 
+    def get_issues(self, repo_slug=None, params=None):
+        """ Get issues from one of your repositories.
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('GET_ISSUES', username=self.username, repo_slug=repo_slug)
+        return self.dispatch('GET', url, auth=self.auth, params=params)
+
+    def get_issue(self, issue_id, repo_slug=None):
+        """ Get an issue from one of your repositories.
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('GET_ISSUE', username=self.username, repo_slug=repo_slug, issue_id=issue_id)
+        return self.dispatch('GET', url, auth=self.auth)
+
+    def add_issue(self, repo_slug=None, **kwargs):
+        """ Add an issue to one of your repositories.
+            Each issue require a different set of attributes,
+            you can pass them as keyword arguments (attributename='attributevalue').
+            Attributes are:
+                title: The title of the new issue.
+                content: The content of the new issue.
+                component: The component associated with the issue.
+                milestone: The milestone associated with the issue.
+                version: The version associated with the issue.
+                responsible: The username of the person responsible for the issue.
+                status: The status of the issue (new, open, resolved, on hold, invalid, duplicate, or wontfix).
+                kind: The kind of issue (bug, enhancement, or proposal).
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('CREATE_ISSUE', username=self.username, repo_slug=repo_slug)
+        return self.dispatch('POST', url, auth=self.auth, **kwargs)
+
+    def update_issue(self, issue_id, repo_slug=None, **kwargs):
+        """ Update an issue to one of your repositories.
+            Each issue require a different set of attributes,
+            you can pass them as keyword arguments (attributename='attributevalue').
+            Attributes are:
+                title: The title of the new issue.
+                content: The content of the new issue.
+                component: The component associated with the issue.
+                milestone: The milestone associated with the issue.
+                version: The version associated with the issue.
+                responsible: The username of the person responsible for the issue.
+                status: The status of the issue (new, open, resolved, on hold, invalid, duplicate, or wontfix).
+                kind: The kind of issue (bug, enhancement, or proposal).
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('UPDATE_ISSUE', username=self.username, repo_slug=repo_slug, issue_id=issue_id)
+        return self.dispatch('PUT', url, auth=self.auth, **kwargs)
+
+    def delete_issue(self, issue_id, repo_slug=None):
+        """ Delete an issue from one of your repositories.
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('DELETE_ISSUE', username=self.username, repo_slug=repo_slug, issue_id=issue_id)
+        return self.dispatch('DELETE', url, auth=self.auth)
+
+    def get_issue_comments(self, issue_id, repo_slug=None):
+        """ Get issue comments from one of your repositories.
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('GET_COMMENTS', username=self.username,
+                       repo_slug=repo_slug, issue_id=issue_id)
+        return self.dispatch('GET', url, auth=self.auth)
+
+    def get_issue_comment(self, issue_id, comment_id, repo_slug=None):
+        """ Get an issue from one of your repositories.
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('GET_COMMENT', username=self.username,
+                       repo_slug=repo_slug, issue_id=issue_id,
+                       comment_id=comment_id)
+        return self.dispatch('GET', url, auth=self.auth)
+
+    def add_issue_comment(self, issue_id, repo_slug=None, **kwargs):
+        """ Add an issue comment to one of your repositories.
+            Each issue comment require only the content data field
+            the system autopopulate the rest.
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('CREATE_COMMENT', username=self.username,
+                       repo_slug=repo_slug, issue_id=issue_id)
+        return self.dispatch('POST', url, auth=self.auth, **kwargs)
+
+    def update_issue_comment(self, issue_id, comment_id, repo_slug=None, **kwargs):
+        """ Update an issue comment in one of your repositories.
+            Each issue comment require only the content data field
+            the system autopopulate the rest.
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('UPDATE_COMMENT', username=self.username,
+                       repo_slug=repo_slug, issue_id=issue_id,
+                       comment_id=comment_id)
+        return self.dispatch('PUT', url, auth=self.auth, **kwargs)
+
+    def delete_issue_comment(self, issue_id, comment_id, repo_slug=None):
+        """ Delete an issue from one of your repositories.
+        """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('DELETE_COMMENT', username=self.username,
+                       repo_slug=repo_slug, issue_id=issue_id,
+                       comment_id=comment_id)
+        return self.dispatch('DELETE', url, auth=self.auth)
+
     #  ========
     #  = URLs =
     #  ========
@@ -324,6 +429,18 @@ class Bitbucket(object):
         'GET_SSH_KEY': 'ssh-keys/%(key_id)s',
         'SET_SSH_KEY': 'ssh-keys/',
         'DELETE_SSH_KEY': 'ssh-keys/%(key_id)s',
+        # Issues
+        'GET_ISSUES': 'repositories/%(username)s/%(repo_slug)s/issues/',
+        'GET_ISSUE':  'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
+        'CREATE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/',
+        'UPDATE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
+        'DELETE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
+        # Issue comments
+        'GET_COMMENTS': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/',
+        'GET_COMMENT':  'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
+        'CREATE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/',
+        'UPDATE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
+        'DELETE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
 
     }
 

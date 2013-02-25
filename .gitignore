@@ -4,3 +4,8 @@ dist/
 *.sublime-project
 MANIFEST
 *.sublime-workspace
+.gitignore.swp
+.project
+.pydevproject
+.settings/
+build/
