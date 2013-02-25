@@ -98,45 +98,45 @@ class Bitbucket(object):
         """ Return credentials for current Bitbucket user. """
         return (self.username, self.password)
 
-    def username(): #@NoSelf
+    @property
+    def username(self):
         """Your username."""
-        def fget(self):
-            return self._username
+        return self._username
 
-        def fset(self, value):
-            self._username = '%s' % value
+    @username.setter
+    def username(self, value):
+        self._username = '%s' % value
 
-        def fdel(self):
-            del self._username
-        return locals()
-    username = property(**username())
+    @username.deleter
+    def username(self):
+        del self._username
 
-    def password(): #@NoSelf
+    @property
+    def password(self):
         """Your password."""
-        def fget(self):
-                return self._password
+        return self._password
 
-        def fset(self, value):
-                self._password = '%s' % value
+    @password.setter
+    def password(self, value):
+            self._password = '%s' % value
 
-        def fdel(self):
-                del self._password
-        return locals()
-    password = property(**password())
+    @password.deleter
+    def password(self):
+        del self._password
 
-    def repo_slug(): #@NoSelf
+    @property
+    def repo_slug(self):
         """Your repository slug name."""
-        def fget(self):
-                return self._repo_slug
+        return self._repo_slug
 
-        def fset(self, value):
-            value = '%s' % value
-            self._repo_slug = value.lower().replace(r'[^a-z0-9_-]+', '-')
+    @repo_slug.setter
+    def repo_slug(self, value):
+        value = '%s' % value
+        self._repo_slug = value.lower().replace(r'[^a-z0-9_-]+', '-')
 
-        def fdel(self):
-                del self._repo_slug
-        return locals()
-    repo_slug = property(**repo_slug())
+    @repo_slug.deleter
+    def repo_slug(self):
+        del self._repo_slug
 
     # =======
     # = API =
