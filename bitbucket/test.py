@@ -118,21 +118,21 @@ class BitbucketAnnonymousMethodsTest(BitbucketTest):
 
     def test_get_public_repos(self):
         """ Test public_repos on specific user."""
-        success, result = self.bb.public_repos(username=username)
+        success, result = self.bb.repository.public(username=username)
         self.assertTrue(success)
         self.assertIsInstance(result, (dict, list))
 
     def test_get_self_public_repos(self):
         """ Test public_repos on specific user."""
         self.bb.username = username
-        success, result = self.bb.public_repos()
+        success, result = self.bb.repository.public()
         self.assertTrue(success)
         self.assertIsInstance(result, (dict, list))
 
     def test_get_none_public_repos(self):
         """ Test public_repos on specific user."""
         self.bb.username = None
-        success, result = self.bb.public_repos()
+        success, result = self.bb.repository.public()
         self.assertFalse(success)
         self.assertEquals(result, 'Service not found.')
 
