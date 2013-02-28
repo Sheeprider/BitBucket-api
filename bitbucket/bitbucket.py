@@ -46,6 +46,8 @@ class Bitbucket(object):
     def username(self, value):
         if isinstance(value, basestring):
             self._username = unicode(value)
+        if value is None:
+            self._username = None
 
     @username.deleter
     def username(self):
@@ -60,6 +62,8 @@ class Bitbucket(object):
     def password(self, value):
         if isinstance(value, basestring):
             self._password = unicode(value)
+        if value is None:
+            self._password = None
 
     @password.deleter
     def password(self):
@@ -75,6 +79,8 @@ class Bitbucket(object):
         if isinstance(value, basestring):
             value = unicode(value)
         self._repo_slug = value.lower().replace(r'[^a-z0-9_-]+', '-')
+        if value is None:
+            self._repo_slug = None
 
     @repo_slug.deleter
     def repo_slug(self):

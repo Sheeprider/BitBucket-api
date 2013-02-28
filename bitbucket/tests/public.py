@@ -1,7 +1,7 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# run with `site-packages$> python -m bitbucket.tests.public`
 import unittest
-from bitbucket import Bitbucket
+from bitbucket.bitbucket import Bitbucket
 
 
 httpbin = 'http://httpbin.org/'
@@ -10,7 +10,7 @@ bar = u'bar'
 username = 'baptistemillou'
 
 
-class BitbucketTest(unittest.TestCase):
+class AnonymousBitbucketTest(unittest.TestCase):
     """ Bitbucket test base class."""
     def setUp(self):
         """Creating a new annonymous Bitbucket..."""
@@ -21,7 +21,7 @@ class BitbucketTest(unittest.TestCase):
         self.bb = None
 
 
-class BitbucketUtilitiesTest(BitbucketTest):
+class BitbucketUtilitiesTest(AnonymousBitbucketTest):
     """ Testing Bitbucket utilities functions."""
 
     def test_default_credential(self):
@@ -93,7 +93,7 @@ class BitbucketUtilitiesTest(BitbucketTest):
             self.bb.repo_slug
 
 
-class BitbucketAnnonymousMethodsTest(BitbucketTest):
+class BitbucketAnnonymousMethodsTest(AnonymousBitbucketTest):
     """ Testing Bitbucket annonymous methods."""
 
     def test_get_user(self):

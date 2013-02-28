@@ -41,7 +41,7 @@ class Issue(object):
         url = self.bitbucket.url('GET_ISSUE', username=self.bitbucket.username, repo_slug=repo_slug, issue_id=issue_id)
         return self.bitbucket.dispatch('GET', url, auth=self.bitbucket.auth)
 
-    def add(self, repo_slug=None, **kwargs):
+    def create(self, repo_slug=None, **kwargs):
         """ Add an issue to one of your repositories.
             Each issue require a different set of attributes,
             you can pass them as keyword arguments (attributename='attributevalue').

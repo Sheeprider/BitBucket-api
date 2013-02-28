@@ -11,27 +11,27 @@ class Repository(object):
         self.bitbucket.URLS.update(self.URLS)
 
     def _get_files_in_dir(self, repo_slug=None, dir='/'):
-        repo_slug = repo_slug or self.repo_slug or ''
+        repo_slug = repo_slug or self.bitbucket.repo_slug or ''
         dir = dir.lstrip('/')
-        url = self.url(
+        url = self.bitbucket.url(
             'GET_ARCHIVE',
-            username=self.username,
+            username=self.bitbucket.username,
             repo_slug=repo_slug,
             format='src')
         dir_url = url + dir
-        response = self.dispatch('GET', dir_url, auth=self.auth)
+        response = self.bitbucket.dispatch('GET', dir_url, auth=self.bitbucket.auth)
         if response[0] and isinstance(response[1], dict):
             repo_tree = response[1]
-            url = self.url(
+            url = self.bitbucket.url(
                 'GET_ARCHIVE',
-                username=self.username,
+                username=self.bitbucket.username,
                 repo_slug=repo_slug,
                 format='raw')
             # Download all files in dir
             for file in repo_tree['files']:
                 file_url = url + '/'.join((file['path'],))
-                response = self.dispatch('GET', file_url, auth=self.auth)
-                self.repo_tree[file['path']] = response[1]
+                response = self.bitbucket.dispatch('GET', file_url, auth=self.bitbucket.auth)
+                self.bitbucket.repo_tree[file['path']] = response[1]
             # recursively download in dirs
             for directory in repo_tree['directories']:
                 dir_path = '/'.join((dir, directory))
@@ -97,7 +97,7 @@ class Repository(object):
                 with ZipFile(archive, 'w') as zip_archive:
                     for name, file in self.bitbucket.repo_tree.items():
                         with NamedTemporaryFile(delete=False) as temp_file:
-                            temp_file.write(file)
+                            temp_file.write(file.encode('utf-8'))
                         zip_archive.write(temp_file.name, prefix + name)
             return (True, archive.name)
         return (False, 'Could not archive your project.')

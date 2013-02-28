@@ -29,7 +29,7 @@ class IssueComment(object):
                        comment_id=comment_id)
         return self.bitbucket.dispatch('GET', url, auth=self.bitbucket.auth)
 
-    def add(self, issue_id=None, repo_slug=None, **kwargs):
+    def create(self, issue_id=None, repo_slug=None, **kwargs):
         """ Add an issue comment to one of your repositories.
             Each issue comment require only the content data field
             the system autopopulate the rest.

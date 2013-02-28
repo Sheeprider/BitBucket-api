@@ -14,7 +14,7 @@ class SSH(object):
         url = self.bitbucket.url('GET_SSH_KEYS')
         return self.bitbucket.dispatch('GET', url, auth=self.bitbucket.auth)
 
-    def get(self, key_id=1):
+    def get(self, key_id=None):
         """ Get one of the ssh keys associated with your account.
         """
         url = self.bitbucket.url('GET_SSH_KEY', key_id=key_id)

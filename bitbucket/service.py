@@ -8,7 +8,7 @@ class Service(object):
         self.bitbucket = bitbucket
         self.bitbucket.URLS.update(self.URLS)
 
-    def add(self, service, repo_slug=None, **kwargs):
+    def create(self, service, repo_slug=None, **kwargs):
         """ Add a service (hook) to one of your repositories.
             Each type of service require a different set of additionnal fields,
             you can pass them as keyword arguments (fieldname='fieldvalue').
