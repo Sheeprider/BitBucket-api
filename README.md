@@ -1,7 +1,7 @@
 BitBucket-API
 ============
 
-[![Build Status](https://secure.travis-ci.org/Sheeprider/Py-BitBucket.png?branch=master)](http://travis-ci.org/Sheeprider/Py-BitBucket)
+[![Build Status](https://secure.travis-ci.org/Sheeprider/BitBucket-api.png)](http://travis-ci.org/Sheeprider/BitBucket-api)
 
 BitBucket-api is an ISC Licensed library, written in Python.
 
