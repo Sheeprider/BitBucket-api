@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
-USERNAME = ''
-PASSWORD = ''
-REPO_SLUG = ''
+try:
+    from settings import *
+except ImportError:
+    USERNAME = ''
+    PASSWORD = ''
+    REPO_SLUG = ''

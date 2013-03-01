@@ -2,13 +2,13 @@ env/
 dist/
 *.pyc
 MANIFEST
+bitbucket/tests/private/settings.py
 
 # Ignore Sublime Text project files
 *.sublime-project
 *.sublime-workspace
 
 # Ignore aptana and eclipse files
-.gitignore.swp
 .project
 .pydevproject
 .settings/
