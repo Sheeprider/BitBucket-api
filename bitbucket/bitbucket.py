@@ -6,6 +6,8 @@ __all__ = ['Bitbucket', ]
 import json
 
 from requests import Request
+from requests import Session
+from requests import Response
 
 from repository import Repository
 from service import Service
@@ -101,26 +103,26 @@ class Bitbucket(object):
             auth=auth,
             params=params,
             data=kwargs)
-        send = r.send()
-        status = r.response.status_code
-        text = r.response.text
-        error = r.response.error
-        if send:
-            if status >= 200 and status < 300:
-                if text:
-                    try:
-                        return (True, json.loads(text))
-                    except TypeError:
-                        pass
-                    except ValueError:
-                        pass
-                return (True, text)
-            elif status >= 300 and status < 400:
-                return (False, 'Unauthorized access, '
-                    'please check your credentials.')
-            elif status >= 400 and status < 500:
-                return (False, 'Service not found.')
-            elif status >= 500 and status < 600:
+        s = Session()
+        resp = s.send(r.prepare())
+        status = resp.status_code
+        text = resp.text
+        error = resp.reason
+        if status >= 200 and status < 300:
+            if text:
+                try:
+                    return (True, json.loads(text))
+                except TypeError:
+                    pass
+                except ValueError:
+                    pass
+            return (True, text)
+        elif status >= 300 and status < 400:
+            return (False, 'Unauthorized access, '
+                'please check your credentials.')
+        elif status >= 400 and status < 500:
+            return (False, 'Service not found.')
+        elif status >= 500 and status < 600:
                 return (False, 'Server error.')
         else:
             return (False, error)
