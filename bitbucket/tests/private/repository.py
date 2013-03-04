@@ -3,9 +3,8 @@ import os
 from zipfile import is_zipfile
 
 from bitbucket.tests.private.private import AuthenticatedBitbucketTest
-from bitbucket.tests.private import REPO_SLUG
 
-TEST_REPO_SLUG = 'test_bitbucket_api'
+TEST_REPO_SLUG = "test_repository_creation"
 
 
 class RepositoryAuthenticatedMethodsTest(AuthenticatedBitbucketTest):
@@ -25,36 +24,39 @@ class RepositoryAuthenticatedMethodsTest(AuthenticatedBitbucketTest):
 
     def test_create(self):
         """ Test repository creation."""
+        # TODO : test private/public repository creation
         success, result = self.bb.repository.create(TEST_REPO_SLUG)
         self.assertTrue(success)
         self.assertIsInstance(result, dict)
+        # Delete repo
+        success, result = self.bb.repository.delete(repo_slug=TEST_REPO_SLUG)
+        assert success
 
     def test_update(self):
         """ Test repository update."""
-        success, result = self.bb.repository.get()
-        old_desc = result[u'description']
         # Try to change description
         test_description = 'Test Description'
-        success, result = self.bb.repository.update(REPO_SLUG,
-            description=test_description)
+        success, result = self.bb.repository.update(description=test_description)
         self.assertTrue(success)
         self.assertIsInstance(result, dict)
         self.assertEqual(test_description, result[u'description'])
-        # Put back old Description
-        self.bb.repository.update(REPO_SLUG,
-            description=old_desc)
 
     def test_delete(self):
         """ Test repository deletion."""
-        success, result = self.bb.repository.delete(TEST_REPO_SLUG)
+        # Create repo
+        success, result = self.bb.repository.create(TEST_REPO_SLUG)
+        assert success
+        # Delete it
+        success, result = self.bb.repository.delete(repo_slug=TEST_REPO_SLUG)
         self.assertTrue(success)
         self.assertEqual(result, '')
 
-        success, result = self.bb.repository.get(TEST_REPO_SLUG)
+        success, result = self.bb.repository.get(repo_slug=TEST_REPO_SLUG)
         self.assertFalse(success)
 
     def test_archive(self):
         """ Test repository download as archive."""
+        # TODO : add a commit, to be able to download the repo
         success, archive_path = self.bb.repository.archive()
         self.assertTrue(success)
         self.assertTrue(os.path.exists(archive_path))

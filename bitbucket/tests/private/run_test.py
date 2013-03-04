@@ -4,7 +4,7 @@
 import unittest
 
 try:
-    from bitbucket.tests.private import USERNAME, PASSWORD, REPO_SLUG
+    from bitbucket.tests.private import USERNAME, PASSWORD
 except ImportError:
     exit()
 else:

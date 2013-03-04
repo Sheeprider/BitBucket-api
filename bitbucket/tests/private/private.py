@@ -2,17 +2,26 @@
 import unittest
 
 from bitbucket.bitbucket import Bitbucket
-from bitbucket.tests.private import USERNAME, PASSWORD, REPO_SLUG
+from bitbucket.tests.private import USERNAME, PASSWORD
+
+TEST_REPO_SLUG = 'test_bitbucket_api'
 
 
 class AuthenticatedBitbucketTest(unittest.TestCase):
     """ Bitbucket test base class."""
     def setUp(self):
         """Creating a new authenticated Bitbucket..."""
-        self.bb = Bitbucket(USERNAME, PASSWORD, REPO_SLUG)
+        self.bb = Bitbucket(USERNAME, PASSWORD)
+        # Create a repository.
+        success, result = self.bb.repository.create(TEST_REPO_SLUG, has_issues=True)
+        # Save repository's id
+        assert success
+        self.bb.repo_slug = result[u'slug']
 
     def tearDown(self):
         """Destroying the Bitbucket..."""
+        # Delete the repository.
+        self.bb.repository.delete()
         self.bb = None
 
 

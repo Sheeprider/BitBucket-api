@@ -2,4 +2,3 @@
 
 USERNAME = ''
 PASSWORD = ''
-REPO_SLUG = ''

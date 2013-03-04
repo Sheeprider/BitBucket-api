@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# git+git://github.com/Sheeprider/Py-BitBucket.git
+# git+git://github.com/Sheeprider/BitBucket-api.git
 
 __all__ = ['Bitbucket', ]
 
