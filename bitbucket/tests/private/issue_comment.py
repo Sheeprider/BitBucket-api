@@ -24,7 +24,7 @@ class IssueCommentAuthenticatedMethodsTest(AuthenticatedBitbucketTest):
         super(IssueCommentAuthenticatedMethodsTest, self).tearDown()
 
     def test_all(self):
-        """ Test get all issues."""
+        """ Test get all issue comments."""
         success, result = self.bb.issue.comment.all()
         self.assertTrue(success)
         self.assertIsInstance(result, list)

@@ -22,7 +22,6 @@ class SSHAuthenticatedMethodsTest(AuthenticatedBitbucketTest):
             label=u'test key',)
         self.assertTrue(success)
         self.assertIsInstance(result, dict)
-        # print result
         # Save latest ssh's id
         self.ssh_id = result[u'pk']
 

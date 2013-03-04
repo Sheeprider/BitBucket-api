@@ -8,7 +8,7 @@ TEST_REPO_SLUG = 'test_bitbucket_api'
 
 
 class AuthenticatedBitbucketTest(unittest.TestCase):
-    """ Bitbucket test base class."""
+    """ Bitbucket test base class for authenticated methods."""
     def setUp(self):
         """Creating a new authenticated Bitbucket..."""
         self.bb = Bitbucket(USERNAME, PASSWORD)
