@@ -33,9 +33,15 @@ class BitbucketAuthenticatedMethodsTest(AuthenticatedBitbucketTest):
         success, result = self.bb.get_tags()
         self.assertTrue(success)
         self.assertIsInstance(result, dict)
+        # test with invalid repository name
+        success, result = self.bb.get_tags(repo_slug='azertyuiop')
+        self.assertFalse(success)
 
     def test_get_branches(self):
         """ Test get_branches."""
         success, result = self.bb.get_branches()
         self.assertTrue(success)
         self.assertIsInstance(result, dict)
+        # test with invalid repository name
+        success, result = self.bb.get_branches(repo_slug='azertyuiop')
+        self.assertFalse(success)
