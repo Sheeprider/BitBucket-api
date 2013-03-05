@@ -17,7 +17,7 @@ if __name__ == "__main__":
             'bitbucket.tests',
         ],
         license=open('LICENSE').read(),
-        install_requires=['requests', ],
+        install_requires=['requests', 'sh'],
         classifiers=[
             'Development Status :: 3 - Alpha',
             'Intended Audience :: Developers',

@@ -26,4 +26,4 @@ To install bitbucket-api, simply:
 
 ##Requirements
 
-Bitbucket-api require [requests](https://github.com/kennethreitz/requests) to work, but dependencies should be handled by pip.
+Bitbucket-api require [requests](https://github.com/kennethreitz/requests) and [sh](https://github.com/amoffat/sh) to work, but dependencies should be handled by pip.
