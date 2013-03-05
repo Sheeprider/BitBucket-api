@@ -16,6 +16,8 @@ It allows you to access most repositories, services (hooks) and ssh keys related
 * Access, create, update or delete a service (hook)
 * Access, create or delete an SSH key
 * Download a repository as an archive
+* Access, create, update or delete an issue
+* Access, create, update or delete an issue comment
 
 ##Installation
 	
