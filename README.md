@@ -1,7 +1,7 @@
 BitBucket-API
 ============
 
-[![Build Status](https://secure.travis-ci.org/Sheeprider/Py-BitBucket.png?branch=master)](http://travis-ci.org/Sheeprider/Py-BitBucket)
+[![Build Status](https://secure.travis-ci.org/Sheeprider/BitBucket-api.png)](http://travis-ci.org/Sheeprider/BitBucket-api)
 
 BitBucket-api is an ISC Licensed library, written in Python.
 
@@ -26,4 +26,4 @@ To install bitbucket-api, simply:
 
 ##Requirements
 
-Bitbucket-api require [requests](https://github.com/kennethreitz/requests) to work, but dependencies should be handled by pip.
+Bitbucket-api require [requests](https://github.com/kennethreitz/requests) and [sh](https://github.com/amoffat/sh) to work, but dependencies should be handled by pip.

@@ -1,7 +1,7 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# run with `site-packages$> python -m bitbucket.tests.public`
 import unittest
-from bitbucket import Bitbucket
+from bitbucket.bitbucket import Bitbucket
 
 
 httpbin = 'http://httpbin.org/'
@@ -10,7 +10,7 @@ bar = u'bar'
 username = 'baptistemillou'
 
 
-class BitbucketTest(unittest.TestCase):
+class AnonymousBitbucketTest(unittest.TestCase):
     """ Bitbucket test base class."""
     def setUp(self):
         """Creating a new annonymous Bitbucket..."""
@@ -21,7 +21,7 @@ class BitbucketTest(unittest.TestCase):
         self.bb = None
 
 
-class BitbucketUtilitiesTest(BitbucketTest):
+class BitbucketUtilitiesTest(AnonymousBitbucketTest):
     """ Testing Bitbucket utilities functions."""
 
     def test_default_credential(self):
@@ -93,7 +93,7 @@ class BitbucketUtilitiesTest(BitbucketTest):
             self.bb.repo_slug
 
 
-class BitbucketAnnonymousMethodsTest(BitbucketTest):
+class BitbucketAnnonymousMethodsTest(AnonymousBitbucketTest):
     """ Testing Bitbucket annonymous methods."""
 
     def test_get_user(self):
@@ -118,21 +118,21 @@ class BitbucketAnnonymousMethodsTest(BitbucketTest):
 
     def test_get_public_repos(self):
         """ Test public_repos on specific user."""
-        success, result = self.bb.public_repos(username=username)
+        success, result = self.bb.repository.public(username=username)
         self.assertTrue(success)
         self.assertIsInstance(result, (dict, list))
 
     def test_get_self_public_repos(self):
         """ Test public_repos on specific user."""
         self.bb.username = username
-        success, result = self.bb.public_repos()
+        success, result = self.bb.repository.public()
         self.assertTrue(success)
         self.assertIsInstance(result, (dict, list))
 
     def test_get_none_public_repos(self):
         """ Test public_repos on specific user."""
         self.bb.username = None
-        success, result = self.bb.public_repos()
+        success, result = self.bb.repository.public()
         self.assertFalse(success)
         self.assertEquals(result, 'Service not found.')
 

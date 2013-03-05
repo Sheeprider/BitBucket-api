@@ -1,4 +1,2 @@
 # -*- coding: utf-8 -*-
-__version__ = '0.3.1'
-
-# from .bitbucket import Bitbucket
+__version__ = '0.4.2'
