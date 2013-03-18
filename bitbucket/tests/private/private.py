@@ -2,16 +2,40 @@
 import unittest
 
 from bitbucket.bitbucket import Bitbucket
-from bitbucket.tests.private import USERNAME, PASSWORD
+from bitbucket.tests.private import USERNAME, PASSWORD, CONSUMER_KEY, CONSUMER_SECRET
 
 TEST_REPO_SLUG = 'test_bitbucket_api'
 
+# Store oauth credentials between tests
+OAUTH_ACCESS_TOKEN = ''
+OAUTH_ACCESS_TOKEN_SECRET = ''
 
 class AuthenticatedBitbucketTest(unittest.TestCase):
     """ Bitbucket test base class for authenticated methods."""
     def setUp(self):
         """Creating a new authenticated Bitbucket..."""
-        self.bb = Bitbucket(USERNAME, PASSWORD)
+
+        if USERNAME and PASSWORD:
+            self.bb = Bitbucket(USERNAME, PASSWORD)
+        elif USERNAME and CONSUMER_KEY and CONSUMER_SECRET:
+            global OAUTH_ACCESS_TOKEN, OAUTH_ACCESS_TOKEN_SECRET
+
+            self.bb = Bitbucket(USERNAME)
+            
+            # First time we need to open up a browser to enter the verifier            
+            if not OAUTH_ACCESS_TOKEN and not OAUTH_ACCESS_TOKEN_SECRET:
+                self.bb.authorize(CONSUMER_KEY, CONSUMER_SECRET, 'http://localhost/')
+                # open a webbrowser and get the token
+                import webbrowser
+                webbrowser.open(self.bb.url('AUTHENTICATE', token=self.bb.access_token))
+                # Copy the verifier field from the URL in the browser into the console
+                oauth_verifier = raw_input('Enter verifier from url [oauth_verifier]')
+                self.bb.verify(oauth_verifier)
+                OAUTH_ACCESS_TOKEN = self.bb.access_token
+                OAUTH_ACCESS_TOKEN_SECRET = self.bb.access_token_secret
+            else:
+                self.bb.authorize(CONSUMER_KEY, CONSUMER_SECRET, 'http://localhost/', OAUTH_ACCESS_TOKEN, OAUTH_ACCESS_TOKEN_SECRET)
+
         # Create a repository.
         success, result = self.bb.repository.create(TEST_REPO_SLUG, has_issues=True)
         # Save repository's id

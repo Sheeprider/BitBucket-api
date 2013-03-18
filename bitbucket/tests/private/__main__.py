@@ -2,7 +2,7 @@
 # run with `site-packages$> python -m bitbucket.tests.private`
 import unittest
 
-from bitbucket.tests.private import USERNAME, PASSWORD
+from bitbucket.tests.private import USERNAME, PASSWORD, CONSUMER_KEY, CONSUMER_SECRET
 from bitbucket.tests.private.private import BitbucketAuthenticatedMethodsTest
 from bitbucket.tests.private.repository import RepositoryAuthenticatedMethodsTest, ArchiveRepositoryAuthenticatedMethodsTest
 from bitbucket.tests.private.issue import IssueAuthenticatedMethodsTest
