@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest
+import webbrowser
 
 from bitbucket.bitbucket import Bitbucket
 from bitbucket.tests.private import USERNAME, PASSWORD, CONSUMER_KEY, CONSUMER_SECRET
@@ -10,27 +11,31 @@ TEST_REPO_SLUG = 'test_bitbucket_api'
 OAUTH_ACCESS_TOKEN = ''
 OAUTH_ACCESS_TOKEN_SECRET = ''
 
+
 class AuthenticatedBitbucketTest(unittest.TestCase):
     """ Bitbucket test base class for authenticated methods."""
     def setUp(self):
         """Creating a new authenticated Bitbucket..."""
-
         if USERNAME and PASSWORD:
             self.bb = Bitbucket(USERNAME, PASSWORD)
         elif USERNAME and CONSUMER_KEY and CONSUMER_SECRET:
+            # Try Oauth authentication
             global OAUTH_ACCESS_TOKEN, OAUTH_ACCESS_TOKEN_SECRET
-
             self.bb = Bitbucket(USERNAME)
-            
-            # First time we need to open up a browser to enter the verifier            
+
+            # First time we need to open up a browser to enter the verifier
             if not OAUTH_ACCESS_TOKEN and not OAUTH_ACCESS_TOKEN_SECRET:
                 self.bb.authorize(CONSUMER_KEY, CONSUMER_SECRET, 'http://localhost/')
                 # open a webbrowser and get the token
-                import webbrowser
                 webbrowser.open(self.bb.url('AUTHENTICATE', token=self.bb.access_token))
                 # Copy the verifier field from the URL in the browser into the console
-                oauth_verifier = raw_input('Enter verifier from url [oauth_verifier]')
-                self.bb.verify(oauth_verifier)
+                token_is_valid = False
+                while not token_is_valid:
+                    # Ensure a valid oauth_verifier before starting tests
+                    oauth_verifier = raw_input('Enter verifier from url [oauth_verifier]')
+                    token_is_valid = bool(oauth_verifier and self.bb.verify(oauth_verifier)[0])
+                    if not token_is_valid:
+                        print('Invalid oauth_verifier, please try again or quit with CONTROL-C.')
                 OAUTH_ACCESS_TOKEN = self.bb.access_token
                 OAUTH_ACCESS_TOKEN_SECRET = self.bb.access_token_secret
             else:
