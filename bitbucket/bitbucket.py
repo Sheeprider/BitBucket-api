@@ -5,6 +5,7 @@ __all__ = ['Bitbucket', ]
 
 from urlparse import parse_qs
 import json
+import re
 
 from requests import Request, Session
 from requests_oauthlib import OAuth1
@@ -23,7 +24,7 @@ class Bitbucket(object):
     def __init__(self, username='', password='', repo_name_or_slug=''):
         self.username = username
         self.password = password
-        self.repo_slug = repo_name_or_slug.lower().replace(r'[^a-z0-9_-]+', '-')
+        self.repo_slug = repo_name_or_slug
         self.repo_tree = {}
 
         self.repository = Repository(self)
@@ -87,11 +88,13 @@ class Bitbucket(object):
 
     @repo_slug.setter
     def repo_slug(self, value):
-        if isinstance(value, basestring):
-            value = unicode(value)
-        self._repo_slug = value.lower().replace(r'[^a-z0-9_-]+', '-')
         if value is None:
             self._repo_slug = None
+        else:
+            if isinstance(value, basestring):
+                value = unicode(value)
+            value = value.lower()
+            self._repo_slug = re.sub(r'[^a-z0-9_-]+', '-', value)
 
     @repo_slug.deleter
     def repo_slug(self):
