@@ -3,16 +3,17 @@
 
 __all__ = ['Bitbucket', ]
 
+from urlparse import parse_qs
 import json
 
-from requests import Request
-from requests import Session
-from requests import Response
+from requests import Request, Session
+from requests_oauthlib import OAuth1
+import requests
 
+from issue import Issue
 from repository import Repository
 from service import Service
 from ssh import SSH
-from issue import Issue
 
 
 class Bitbucket(object):
@@ -36,74 +37,6 @@ class Bitbucket(object):
         self.consumer_secret = None
         self.oauth = None
 
-    def authorize(self, consumer_key, consumer_secret, callback_url=None, access_token=None, access_token_secret=None):
-        """ Call this with your consumer key, secret and callback URL, to generate a token for verification. """
-        import requests
-        from requests_oauthlib import OAuth1
-        from urlparse import parse_qs
-
-        self.consumer_key = consumer_key
-        self.consumer_secret = consumer_secret
-
-        if not access_token and not access_token_secret:
-            if not callback_url:
-                return (False, "Callback URL required")
-            oauth = OAuth1(consumer_key, 
-                client_secret=consumer_secret,
-                callback_uri=callback_url)
-            r = requests.post(self.url('REQUEST_TOKEN'), auth=oauth)
-            if r.status_code == 200:
-                creds = parse_qs(r.content)
-                
-                self.access_token = creds.get('oauth_token')[0]
-                self.access_token_secret = creds.get('oauth_token_secret')[0]
-            else:
-                 return (False, r.content)
-        else:
-            self.finalize_oauth(access_token, access_token_secret)
-
-        return (True, None)
-
-    def verify(self, verifier, consumer_key=None, consumer_secret=None, access_token=None, access_token_secret=None):
-        """ After converting the token into verifier, call this to finalize the authorization. """
-        import requests
-        from requests_oauthlib import OAuth1
-        from urlparse import parse_qs
-
-        # Stored values can be supplied to verify
-        self.consumer_key = consumer_key or self.consumer_key
-        self.consumer_secret = consumer_secret or self.consumer_secret
-        self.access_token = access_token or self.access_token
-        self.access_token_secret = access_token_secret or self.access_token_secret
-
-        oauth = OAuth1(self.consumer_key,
-            client_secret = self.consumer_secret,
-            resource_owner_key = self.access_token,
-            resource_owner_secret = self.access_token_secret,
-            verifier = verifier)
-        r = requests.post(self.url('ACCESS_TOKEN'), auth=oauth)
-        if r.status_code == 200:
-            creds = parse_qs(r.content)
-        else:
-            return (False, r.content)
-
-        self.finalize_oauth(creds.get('oauth_token')[0], creds.get('oauth_token_secret')[0])
-
-        return (True, None)
-
-    def finalize_oauth(self, access_token, access_token_secret):
-        """ Called internally once auth process is complete. """
-        from requests_oauthlib import OAuth1
-
-        self.access_token = access_token
-        self.access_token_secret = access_token_secret
-
-        # Final OAuth object
-        self.oauth = OAuth1(self.consumer_key, 
-            client_secret=self.consumer_secret, 
-            resource_owner_key=self.access_token,
-            resource_owner_secret=self.access_token_secret)
-
     #  ===================
     #  = Getters/Setters =
     #  ===================
@@ -113,7 +46,6 @@ class Bitbucket(object):
         """ Return credentials for current Bitbucket user. """
         if self.oauth:
             return self.oauth
-
         return (self.username, self.password)
 
     @property
@@ -165,6 +97,70 @@ class Bitbucket(object):
     def repo_slug(self):
         del self._repo_slug
 
+    #  ========================
+    #  = Oauth authentication =
+    #  ========================
+
+    def authorize(self, consumer_key, consumer_secret, callback_url=None, access_token=None, access_token_secret=None):
+        """ Call this with your consumer key, secret and callback URL, to generate a token for verification. """
+        self.consumer_key = consumer_key
+        self.consumer_secret = consumer_secret
+
+        if not access_token and not access_token_secret:
+            if not callback_url:
+                return (False, "Callback URL required")
+            oauth = OAuth1(
+                consumer_key,
+                client_secret=consumer_secret,
+                callback_uri=callback_url)
+            r = requests.post(self.url('REQUEST_TOKEN'), auth=oauth)
+            if r.status_code == 200:
+                creds = parse_qs(r.content)
+
+                self.access_token = creds.get('oauth_token')[0]
+                self.access_token_secret = creds.get('oauth_token_secret')[0]
+            else:
+                return (False, r.content)
+        else:
+            self.finalize_oauth(access_token, access_token_secret)
+
+        return (True, None)
+
+    def verify(self, verifier, consumer_key=None, consumer_secret=None, access_token=None, access_token_secret=None):
+        """ After converting the token into verifier, call this to finalize the authorization. """
+        # Stored values can be supplied to verify
+        self.consumer_key = consumer_key or self.consumer_key
+        self.consumer_secret = consumer_secret or self.consumer_secret
+        self.access_token = access_token or self.access_token
+        self.access_token_secret = access_token_secret or self.access_token_secret
+
+        oauth = OAuth1(
+            self.consumer_key,
+            client_secret=self.consumer_secret,
+            resource_owner_key=self.access_token,
+            resource_owner_secret=self.access_token_secret,
+            verifier=verifier)
+        r = requests.post(self.url('ACCESS_TOKEN'), auth=oauth)
+        if r.status_code == 200:
+            creds = parse_qs(r.content)
+        else:
+            return (False, r.content)
+
+        self.finalize_oauth(creds.get('oauth_token')[0], creds.get('oauth_token_secret')[0])
+        return (True, None)
+
+    def finalize_oauth(self, access_token, access_token_secret):
+        """ Called internally once auth process is complete. """
+        self.access_token = access_token
+        self.access_token_secret = access_token_secret
+
+        # Final OAuth object
+        self.oauth = OAuth1(
+            self.consumer_key,
+            client_secret=self.consumer_secret,
+            resource_owner_key=self.access_token,
+            resource_owner_secret=self.access_token_secret)
+
     #  ======================
     #  = High lvl functions =
     #  ======================
@@ -195,7 +191,9 @@ class Bitbucket(object):
                     pass
             return (True, text)
         elif status >= 300 and status < 400:
-            return (False, 'Unauthorized access, '
+            return (
+                False,
+                'Unauthorized access, '
                 'please check your credentials.')
         elif status >= 400 and status < 500:
             return (False, 'Service not found.')
