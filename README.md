@@ -20,7 +20,7 @@ It allows you to access most repositories, services (hooks) and ssh keys related
 * Access, create, update or delete an issue comment
 
 ##Installation
-	
+
 To install bitbucket-api, simply:
 
 	$ pip install bitbucket-api
@@ -28,4 +28,4 @@ To install bitbucket-api, simply:
 
 ##Requirements
 
-Bitbucket-api require [requests](https://github.com/kennethreitz/requests) and [sh](https://github.com/amoffat/sh) to work, but dependencies should be handled by pip.
+Bitbucket-api require [requests](https://github.com/kennethreitz/requests), [sh](https://github.com/amoffat/sh) and [requests-oauthlib](https://github.com/requests/requests-oauthlib)to work, but dependencies should be handled by pip.
