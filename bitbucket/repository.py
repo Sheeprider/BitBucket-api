@@ -3,12 +3,22 @@ from tempfile import NamedTemporaryFile
 from zipfile import ZipFile
 
 
+URLS = {
+    'CREATE_REPO': 'repositories/',
+    'GET_REPO': 'repositories/%(username)s/%(repo_slug)s/',
+    'UPDATE_REPO': 'repositories/%(username)s/%(repo_slug)s/',
+    'DELETE_REPO': 'repositories/%(username)s/%(repo_slug)s/',
+    # Get archive
+    'GET_ARCHIVE': 'repositories/%(username)s/%(repo_slug)s/%(format)s/master/',
+}
+
+
 class Repository(object):
     """ This class provide repository-related methods to Bitbucket objects."""
 
     def __init__(self, bitbucket):
         self.bitbucket = bitbucket
-        self.bitbucket.URLS.update(self.URLS)
+        self.bitbucket.URLS.update(URLS)
 
     def _get_files_in_dir(self, repo_slug=None, dir='/'):
         repo_slug = repo_slug or self.bitbucket.repo_slug or ''
@@ -102,12 +112,3 @@ class Repository(object):
                         zip_archive.write(temp_file.name, prefix + name)
             return (True, archive.name)
         return (False, 'Could not archive your project.')
-
-    URLS = {
-        'CREATE_REPO': 'repositories/',
-        'GET_REPO': 'repositories/%(username)s/%(repo_slug)s/',
-        'UPDATE_REPO': 'repositories/%(username)s/%(repo_slug)s/',
-        'DELETE_REPO': 'repositories/%(username)s/%(repo_slug)s/',
-        # Get archive
-        'GET_ARCHIVE': 'repositories/%(username)s/%(repo_slug)s/%(format)s/master/',
-    }
