@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__version__ = '0.4.4dev'
+__version__ = '0.4.5'
 
 __doc__ = """
 Bitbucket has a REST API publicly available, this package provide methods to interact with it.
