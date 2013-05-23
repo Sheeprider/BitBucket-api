@@ -37,9 +37,7 @@ URLS = {
 
 
 class Bitbucket(object):
-    """ This class lets you interact with the bitbucket public API.
-        It depends on Requests.
-    """
+    """ This class lets you interact with the bitbucket public API. """
     def __init__(self, username='', password='', repo_name_or_slug=''):
         self.username = username
         self.password = password
@@ -191,7 +189,7 @@ class Bitbucket(object):
     def dispatch(self, method, url, auth=None, params=None, **kwargs):
         """ Send HTTP request, with given method,
             credentials and data to the given URL,
-            and return the status code and the result on success.
+            and return the success and the result on success.
         """
         r = Request(
             method=method,

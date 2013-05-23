@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bitbucket.service &mdash; Bitbucket-API 0.4.4dev documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.4.4dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Bitbucket-API 0.4.4dev documentation" href="../../index.html" />
+    <link rel="up" title="bitbucket" href="../bitbucket.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Bitbucket-API 0.4.4dev documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../bitbucket.html" accesskey="U">bitbucket</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for bitbucket.service</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+
+<div class="viewcode-block" id="Service"><a class="viewcode-back" href="../../bitbucket.html#bitbucket.service.Service">[docs]</a><span class="k">class</span> <span class="nc">Service</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This class provide services-related methods to Bitbucket objects.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bitbucket</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span> <span class="o">=</span> <span class="n">bitbucket</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">URLS</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URLS</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Service.create"><a class="viewcode-back" href="../../bitbucket.html#bitbucket.service.Service.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service</span><span class="p">,</span> <span class="n">repo_slug</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Add a service (hook) to one of your repositories.</span>
+<span class="sd">            Each type of service require a different set of additionnal fields,</span>
+<span class="sd">            you can pass them as keyword arguments (fieldname=&#39;fieldvalue&#39;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">repo_slug</span> <span class="o">=</span> <span class="n">repo_slug</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">repo_slug</span> <span class="ow">or</span> <span class="s">&#39;&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">url</span><span class="p">(</span><span class="s">&#39;SET_SERVICE&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">repo_slug</span><span class="o">=</span><span class="n">repo_slug</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">service</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Service.get"><a class="viewcode-back" href="../../bitbucket.html#bitbucket.service.Service.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service_id</span><span class="p">,</span> <span class="n">repo_slug</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get a service (hook) from one of your repositories.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">repo_slug</span> <span class="o">=</span> <span class="n">repo_slug</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">repo_slug</span> <span class="ow">or</span> <span class="s">&#39;&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">url</span><span class="p">(</span><span class="s">&#39;GET_SERVICE&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">repo_slug</span><span class="o">=</span><span class="n">repo_slug</span><span class="p">,</span> <span class="n">service_id</span><span class="o">=</span><span class="n">service_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Service.update"><a class="viewcode-back" href="../../bitbucket.html#bitbucket.service.Service.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service_id</span><span class="p">,</span> <span class="n">repo_slug</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Update a service (hook) from one of your repositories.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">repo_slug</span> <span class="o">=</span> <span class="n">repo_slug</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">repo_slug</span> <span class="ow">or</span> <span class="s">&#39;&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">url</span><span class="p">(</span><span class="s">&#39;UPDATE_SERVICE&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">repo_slug</span><span class="o">=</span><span class="n">repo_slug</span><span class="p">,</span> <span class="n">service_id</span><span class="o">=</span><span class="n">service_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s">&#39;PUT&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Service.delete"><a class="viewcode-back" href="../../bitbucket.html#bitbucket.service.Service.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service_id</span><span class="p">,</span> <span class="n">repo_slug</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Delete a service (hook) from one of your repositories.</span>
+<span class="sd">            Please use with caution as there is NO confimation and NO undo.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">repo_slug</span> <span class="o">=</span> <span class="n">repo_slug</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">repo_slug</span> <span class="ow">or</span> <span class="s">&#39;&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">url</span><span class="p">(</span><span class="s">&#39;DELETE_SERVICE&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">repo_slug</span><span class="o">=</span><span class="n">repo_slug</span><span class="p">,</span> <span class="n">service_id</span><span class="o">=</span><span class="n">service_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s">&#39;DELETE&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Service.all"><a class="viewcode-back" href="../../bitbucket.html#bitbucket.service.Service.all">[docs]</a>    <span class="k">def</span> <span class="nf">all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_slug</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get all services (hook) from one of your repositories.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">repo_slug</span> <span class="o">=</span> <span class="n">repo_slug</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">repo_slug</span> <span class="ow">or</span> <span class="s">&#39;&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">url</span><span class="p">(</span><span class="s">&#39;GET_SERVICES&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">repo_slug</span><span class="o">=</span><span class="n">repo_slug</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span>
+</div>
+    <span class="n">URLS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c"># Get services (hooks)</span>
+        <span class="s">&#39;GET_SERVICE&#39;</span><span class="p">:</span> <span class="s">&#39;repositories/</span><span class="si">%(username)s</span><span class="s">/</span><span class="si">%(repo_slug)s</span><span class="s">/services/</span><span class="si">%(service_id)s</span><span class="s">/&#39;</span><span class="p">,</span>
+        <span class="s">&#39;GET_SERVICES&#39;</span><span class="p">:</span> <span class="s">&#39;repositories/</span><span class="si">%(username)s</span><span class="s">/</span><span class="si">%(repo_slug)s</span><span class="s">/services/&#39;</span><span class="p">,</span>
+        <span class="c"># Set services (hooks)</span>
+        <span class="s">&#39;SET_SERVICE&#39;</span><span class="p">:</span> <span class="s">&#39;repositories/</span><span class="si">%(username)s</span><span class="s">/</span><span class="si">%(repo_slug)s</span><span class="s">/services/&#39;</span><span class="p">,</span>
+        <span class="s">&#39;UPDATE_SERVICE&#39;</span><span class="p">:</span> <span class="s">&#39;repositories/</span><span class="si">%(username)s</span><span class="s">/</span><span class="si">%(repo_slug)s</span><span class="s">/services/</span><span class="si">%(service_id)s</span><span class="s">/&#39;</span><span class="p">,</span>
+        <span class="s">&#39;DELETE_SERVICE&#39;</span><span class="p">:</span> <span class="s">&#39;repositories/</span><span class="si">%(username)s</span><span class="s">/</span><span class="si">%(repo_slug)s</span><span class="s">/services/</span><span class="si">%(service_id)s</span><span class="s">/&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+<span class="c">#  ============</span>
+<span class="c">#  = Services =</span>
+<span class="c">#  ============</span>
+<span class="c"># SERVICES = {</span>
+<span class="c">#   &#39;Basecamp&#39;: (&#39;Username&#39;, &#39;Password&#39;, &#39;Discussion URL&#39;,),</span>
+<span class="c">#   &#39;CIA.vc&#39;: (&#39;Module&#39;, &#39;Project&#39;,),</span>
+<span class="c">#   &#39;Email Diff&#39;: (&#39;Email&#39;,),</span>
+<span class="c">#   &#39;Email&#39;: (&#39;Email&#39;,),</span>
+<span class="c">#   &#39;FogBugz&#39;: (&#39;Repository ID&#39;, &#39;CVSSubmit URL&#39;,),</span>
+<span class="c">#   &#39;FriendFeed&#39;: (&#39;Username&#39;, &#39;Remote Key&#39;, &#39;Format&#39;,),</span>
+<span class="c">#   &#39;Geocommit&#39;: (None,),</span>
+<span class="c">#   &#39;Issues&#39;: (None,),</span>
+<span class="c">#   &#39;Lighthouse&#39;: (&#39;Project ID&#39;, &#39;API Key&#39;, &#39;Subdomain&#39;,),</span>
+<span class="c">#   &#39;Pivotal Tracker&#39;: (&#39;Token&#39;,),</span>
+<span class="c">#   &#39;POST&#39;: (&#39;URL&#39;,),</span>
+<span class="c">#   &#39;Rietveld&#39;: (&#39;Email&#39;, &#39;Password&#39;, &#39;URL&#39;,),</span>
+<span class="c">#   &#39;Superfeedr&#39;: (None,),</span>
+<span class="c"># }</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Bitbucket-API 0.4.4dev documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../bitbucket.html" >bitbucket</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Baptiste Millou.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

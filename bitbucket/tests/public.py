@@ -13,16 +13,16 @@ username = 'baptistemillou'
 class AnonymousBitbucketTest(unittest.TestCase):
     """ Bitbucket test base class."""
     def setUp(self):
-        """Creating a new annonymous Bitbucket..."""
+        """Create a new annonymous Bitbucket..."""
         self.bb = Bitbucket()
 
     def tearDown(self):
-        """Destroying the Bitbucket..."""
+        """Destroy the Bitbucket..."""
         self.bb = None
 
 
 class BitbucketUtilitiesTest(AnonymousBitbucketTest):
-    """ Testing Bitbucket utilities functions."""
+    """ Test Bitbucket utilities functions."""
 
     def test_default_credential(self):
         self.assertEquals(self.bb.username, '')
@@ -94,7 +94,7 @@ class BitbucketUtilitiesTest(AnonymousBitbucketTest):
 
 
 class BitbucketAnnonymousMethodsTest(AnonymousBitbucketTest):
-    """ Testing Bitbucket annonymous methods."""
+    """ Test Bitbucket annonymous methods."""
 
     def test_get_user(self):
         """ Test get_user on specific user."""

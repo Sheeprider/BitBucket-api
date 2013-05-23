@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bitbucket.tests.private.issue_comment &mdash; Bitbucket-API 0.4.4dev documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.4.4dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="Bitbucket-API 0.4.4dev documentation" href="../../../../index.html" />
+    <link rel="up" title="bitbucket" href="../../../bitbucket.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">Bitbucket-API 0.4.4dev documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../../bitbucket.html" accesskey="U">bitbucket</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for bitbucket.tests.private.issue_comment</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">bitbucket.tests.private.private</span> <span class="kn">import</span> <span class="n">AuthenticatedBitbucketTest</span>
+
+
+<div class="viewcode-block" id="IssueCommentAuthenticatedMethodsTest"><a class="viewcode-back" href="../../../../bitbucket.tests.private.html#bitbucket.tests.private.issue_comment.IssueCommentAuthenticatedMethodsTest">[docs]</a><span class="k">class</span> <span class="nc">IssueCommentAuthenticatedMethodsTest</span><span class="p">(</span><span class="n">AuthenticatedBitbucketTest</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Testing bitbucket.issue.comments methods.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="IssueCommentAuthenticatedMethodsTest.setUp"><a class="viewcode-back" href="../../../../bitbucket.tests.private.html#bitbucket.tests.private.issue_comment.IssueCommentAuthenticatedMethodsTest.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">IssueCommentAuthenticatedMethodsTest</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
+        <span class="c"># Create an issue.</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="s">u&#39;Test Issue Bitbucket API&#39;</span><span class="p">,</span>
+            <span class="n">content</span><span class="o">=</span><span class="s">u&#39;Test Issue Bitbucket API&#39;</span><span class="p">,</span>
+            <span class="n">responsible</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
+            <span class="n">status</span><span class="o">=</span><span class="s">u&#39;new&#39;</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s">u&#39;bug&#39;</span><span class="p">,)</span>
+        <span class="c"># Save latest issue&#39;s id</span>
+        <span class="k">assert</span> <span class="n">success</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">comment</span><span class="o">.</span><span class="n">issue_id</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s">u&#39;local_id&#39;</span><span class="p">]</span>
+</div>
+<div class="viewcode-block" id="IssueCommentAuthenticatedMethodsTest.tearDown"><a class="viewcode-back" href="../../../../bitbucket.tests.private.html#bitbucket.tests.private.issue_comment.IssueCommentAuthenticatedMethodsTest.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Delete issue.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">issue_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">comment</span><span class="o">.</span><span class="n">issue_id</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">IssueCommentAuthenticatedMethodsTest</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">tearDown</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="IssueCommentAuthenticatedMethodsTest.test_all"><a class="viewcode-back" href="../../../../bitbucket.tests.private.html#bitbucket.tests.private.issue_comment.IssueCommentAuthenticatedMethodsTest.test_all">[docs]</a>    <span class="k">def</span> <span class="nf">test_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Test get all issue comments.&quot;&quot;&quot;</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">comment</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_create_issue_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="s">u&#39;Test Issue comment Bitbucket API&#39;</span>
+        <span class="c"># Test create an issue comment</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">comment</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">content</span><span class="o">=</span><span class="n">content</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s">u&#39;content&#39;</span><span class="p">],</span> <span class="n">content</span><span class="p">)</span>
+        <span class="c"># Save latest issue comment&#39;s id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comment_id</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s">u&#39;comment_id&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_get_issue_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Test get an issue comment.</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">comment</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">comment_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">comment_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="c"># Test get an invalid issue comment.</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">comment</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">comment_id</span><span class="o">=</span><span class="mi">99999999999</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_issue_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Test issue comment update.</span>
+        <span class="n">test_content</span> <span class="o">=</span> <span class="s">&#39;Test content&#39;</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">comment</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="n">comment_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">comment_id</span><span class="p">,</span>
+            <span class="n">content</span><span class="o">=</span><span class="n">test_content</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">test_content</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="s">u&#39;content&#39;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_delete_issue_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Test issue comment delete.</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">comment</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span>
+            <span class="n">comment_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">comment_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">comment</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">comment_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">comment_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+
+<div class="viewcode-block" id="IssueCommentAuthenticatedMethodsTest.test_CRUD"><a class="viewcode-back" href="../../../../bitbucket.tests.private.html#bitbucket.tests.private.issue_comment.IssueCommentAuthenticatedMethodsTest.test_CRUD">[docs]</a>    <span class="k">def</span> <span class="nf">test_CRUD</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Test issue comment create/read/update/delete.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_issue_comment</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_issue_comment</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_issue_comment</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_delete_issue_comment</span><span class="p">()</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">Bitbucket-API 0.4.4dev documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../../bitbucket.html" >bitbucket</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Baptiste Millou.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

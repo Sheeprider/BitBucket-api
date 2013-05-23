@@ -1,5 +1,4 @@
-BitBucket-API
-============
+#BitBucket-API
 
 [![Build Status](https://secure.travis-ci.org/Sheeprider/BitBucket-api.png)](http://travis-ci.org/Sheeprider/BitBucket-api)
 
@@ -20,7 +19,7 @@ It allows you to access most repositories, services (hooks) and ssh keys related
 * Access, create, update or delete an issue comment
 
 ##Installation
-	
+
 To install bitbucket-api, simply:
 
 	$ pip install bitbucket-api

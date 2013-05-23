@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tests Package &mdash; Bitbucket-API 0.4.4dev documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4.4dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Bitbucket-API 0.4.4dev documentation" href="index.html" />
+    <link rel="next" title="private Package" href="bitbucket.tests.private.html" />
+    <link rel="prev" title="private Package" href="bitbucket.tests.private.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="bitbucket.tests.private.html" title="private Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="bitbucket.tests.private.html" title="private Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Bitbucket-API 0.4.4dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tests-package">
+<h1>tests Package<a class="headerlink" href="#tests-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">tests</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-bitbucket.tests"></span></div>
+<div class="section" id="module-bitbucket.tests.public">
+<span id="public-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">public</span></tt> Module<a class="headerlink" href="#module-bitbucket.tests.public" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bitbucket.tests.public.AnonymousBitbucketTest">
+<em class="property">class </em><tt class="descclassname">bitbucket.tests.public.</tt><tt class="descname">AnonymousBitbucketTest</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#AnonymousBitbucketTest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.AnonymousBitbucketTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></tt></p>
+<p>Bitbucket test base class.</p>
+<dl class="method">
+<dt id="bitbucket.tests.public.AnonymousBitbucketTest.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#AnonymousBitbucketTest.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.AnonymousBitbucketTest.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new annonymous Bitbucket...</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.tests.public.AnonymousBitbucketTest.tearDown">
+<tt class="descname">tearDown</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#AnonymousBitbucketTest.tearDown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.AnonymousBitbucketTest.tearDown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy the Bitbucket...</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bitbucket.tests.public.BitbucketAnnonymousMethodsTest">
+<em class="property">class </em><tt class="descclassname">bitbucket.tests.public.</tt><tt class="descname">BitbucketAnnonymousMethodsTest</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketAnnonymousMethodsTest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketAnnonymousMethodsTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bitbucket.tests.public.AnonymousBitbucketTest" title="bitbucket.tests.public.AnonymousBitbucketTest"><tt class="xref py py-class docutils literal"><span class="pre">bitbucket.tests.public.AnonymousBitbucketTest</span></tt></a></p>
+<p>Test Bitbucket annonymous methods.</p>
+<dl class="method">
+<dt id="bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_none_public_repos">
+<tt class="descname">test_get_none_public_repos</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketAnnonymousMethodsTest.test_get_none_public_repos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_none_public_repos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test public_repos on specific user.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_none_user">
+<tt class="descname">test_get_none_user</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketAnnonymousMethodsTest.test_get_none_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_none_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test get_user with no username.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_public_repos">
+<tt class="descname">test_get_public_repos</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketAnnonymousMethodsTest.test_get_public_repos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_public_repos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test public_repos on specific user.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_self_public_repos">
+<tt class="descname">test_get_self_public_repos</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketAnnonymousMethodsTest.test_get_self_public_repos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_self_public_repos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test public_repos on specific user.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_self_user">
+<tt class="descname">test_get_self_user</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketAnnonymousMethodsTest.test_get_self_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_self_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test get_user on self username.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_user">
+<tt class="descname">test_get_user</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketAnnonymousMethodsTest.test_get_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test get_user on specific user.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bitbucket.tests.public.BitbucketUtilitiesTest">
+<em class="property">class </em><tt class="descclassname">bitbucket.tests.public.</tt><tt class="descname">BitbucketUtilitiesTest</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketUtilitiesTest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketUtilitiesTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bitbucket.tests.public.AnonymousBitbucketTest" title="bitbucket.tests.public.AnonymousBitbucketTest"><tt class="xref py py-class docutils literal"><span class="pre">bitbucket.tests.public.AnonymousBitbucketTest</span></tt></a></p>
+<p>Test Bitbucket utilities functions.</p>
+<dl class="method">
+<dt id="bitbucket.tests.public.BitbucketUtilitiesTest.test_auth">
+<tt class="descname">test_auth</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketUtilitiesTest.test_auth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketUtilitiesTest.test_auth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.tests.public.BitbucketUtilitiesTest.test_default_credential">
+<tt class="descname">test_default_credential</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketUtilitiesTest.test_default_credential"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketUtilitiesTest.test_default_credential" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.tests.public.BitbucketUtilitiesTest.test_dispatch_delete">
+<tt class="descname">test_dispatch_delete</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketUtilitiesTest.test_dispatch_delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketUtilitiesTest.test_dispatch_delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.tests.public.BitbucketUtilitiesTest.test_dispatch_get">
+<tt class="descname">test_dispatch_get</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketUtilitiesTest.test_dispatch_get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketUtilitiesTest.test_dispatch_get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.tests.public.BitbucketUtilitiesTest.test_dispatch_post">
+<tt class="descname">test_dispatch_post</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketUtilitiesTest.test_dispatch_post"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketUtilitiesTest.test_dispatch_post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.tests.public.BitbucketUtilitiesTest.test_dispatch_put">
+<tt class="descname">test_dispatch_put</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketUtilitiesTest.test_dispatch_put"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketUtilitiesTest.test_dispatch_put" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.tests.public.BitbucketUtilitiesTest.test_password">
+<tt class="descname">test_password</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketUtilitiesTest.test_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketUtilitiesTest.test_password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.tests.public.BitbucketUtilitiesTest.test_repo_slug">
+<tt class="descname">test_repo_slug</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketUtilitiesTest.test_repo_slug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketUtilitiesTest.test_repo_slug" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.tests.public.BitbucketUtilitiesTest.test_url_complex">
+<tt class="descname">test_url_complex</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketUtilitiesTest.test_url_complex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketUtilitiesTest.test_url_complex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.tests.public.BitbucketUtilitiesTest.test_url_simple">
+<tt class="descname">test_url_simple</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketUtilitiesTest.test_url_simple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketUtilitiesTest.test_url_simple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.tests.public.BitbucketUtilitiesTest.test_username">
+<tt class="descname">test_username</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/tests/public.html#BitbucketUtilitiesTest.test_username"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.tests.public.BitbucketUtilitiesTest.test_username" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bitbucket.tests.private.html">private Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bitbucket.tests.private.html#id1"><tt class="docutils literal"><span class="pre">private</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bitbucket.tests.private.html#module-bitbucket.tests.private.issue"><tt class="docutils literal"><span class="pre">issue</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bitbucket.tests.private.html#module-bitbucket.tests.private.issue_comment"><tt class="docutils literal"><span class="pre">issue_comment</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bitbucket.tests.private.html#module-bitbucket.tests.private.private"><tt class="docutils literal"><span class="pre">private</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bitbucket.tests.private.html#module-bitbucket.tests.private.repository"><tt class="docutils literal"><span class="pre">repository</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bitbucket.tests.private.html#module-bitbucket.tests.private.service"><tt class="docutils literal"><span class="pre">service</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bitbucket.tests.private.html#settings-module"><tt class="docutils literal"><span class="pre">settings</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bitbucket.tests.private.html#module-bitbucket.tests.private.ssh"><tt class="docutils literal"><span class="pre">ssh</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">tests Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">tests</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-bitbucket.tests.public"><tt class="docutils literal"><span class="pre">public</span></tt> Module</a></li>
+<li><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="bitbucket.tests.private.html"
+                        title="previous chapter">private Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="bitbucket.tests.private.html"
+                        title="next chapter">private Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/bitbucket.tests.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="bitbucket.tests.private.html" title="private Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="bitbucket.tests.private.html" title="private Package"
+             >previous</a> |</li>
+        <li><a href="index.html">Bitbucket-API 0.4.4dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Baptiste Millou.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
