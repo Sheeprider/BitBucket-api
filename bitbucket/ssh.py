@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+URLS = {
+    # SSH keys
+    'GET_SSH_KEYS': 'ssh-keys/',
+    'GET_SSH_KEY': 'ssh-keys/%(key_id)s',
+    'SET_SSH_KEY': 'ssh-keys/',
+    'DELETE_SSH_KEY': 'ssh-keys/%(key_id)s',
+}
 
 
 class SSH(object):
@@ -6,7 +13,7 @@ class SSH(object):
 
     def __init__(self, bitbucket):
         self.bitbucket = bitbucket
-        self.bitbucket.URLS.update(self.URLS)
+        self.bitbucket.URLS.update(URLS)
 
     def all(self):
         """ Get all ssh keys associated with your account.
@@ -33,11 +40,3 @@ class SSH(object):
         """
         url = self.bitbucket.url('DELETE_SSH_KEY', key_id=key_id)
         return self.bitbucket.dispatch('DELETE', url, auth=self.bitbucket.auth)
-
-    URLS = {
-        # SSH keys
-        'GET_SSH_KEYS': 'ssh-keys/',
-        'GET_SSH_KEY': 'ssh-keys/%(key_id)s',
-        'SET_SSH_KEY': 'ssh-keys/',
-        'DELETE_SSH_KEY': 'ssh-keys/%(key_id)s',
-    }

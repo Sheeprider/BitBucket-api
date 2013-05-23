@@ -17,15 +17,33 @@ from service import Service
 from ssh import SSH
 
 
+#  ========
+#  = URLs =
+#  ========
+URLS = {
+    'BASE': 'https://bitbucket.org/!api/1.0/%s',
+    # Get user profile and repos
+    'GET_USER': 'users/%(username)s/',
+    # Search repo
+    # 'SEARCH_REPO': 'repositories/?name=%(search)s',
+    # Get tags & branches
+    'GET_TAGS': 'repositories/%(username)s/%(repo_slug)s/tags/',
+    'GET_BRANCHES': 'repositories/%(username)s/%(repo_slug)s/branches/',
+
+    'REQUEST_TOKEN': 'oauth/request_token/',
+    'AUTHENTICATE': 'oauth/authenticate?oauth_token=%(token)s',
+    'ACCESS_TOKEN': 'oauth/access_token/'
+}
+
+
 class Bitbucket(object):
-    """ This class lets you interact with the bitbucket public API.
-        It depends on Requests.
-    """
+    """ This class lets you interact with the bitbucket public API. """
     def __init__(self, username='', password='', repo_name_or_slug=''):
         self.username = username
         self.password = password
         self.repo_slug = repo_name_or_slug
         self.repo_tree = {}
+        self.URLS = URLS
 
         self.repository = Repository(self)
         self.service = Service(self)
@@ -51,7 +69,7 @@ class Bitbucket(object):
 
     @property
     def username(self):
-        """Your username."""
+        """Return your repository's username."""
         return self._username
 
     @username.setter
@@ -67,7 +85,7 @@ class Bitbucket(object):
 
     @property
     def password(self):
-        """Your password."""
+        """Return your repository's password."""
         return self._password
 
     @password.setter
@@ -83,7 +101,7 @@ class Bitbucket(object):
 
     @property
     def repo_slug(self):
-        """Your repository slug name."""
+        """Return your repository's slug name."""
         return self._repo_slug
 
     @repo_slug.setter
@@ -171,7 +189,7 @@ class Bitbucket(object):
     def dispatch(self, method, url, auth=None, params=None, **kwargs):
         """ Send HTTP request, with given method,
             credentials and data to the given URL,
-            and return the status code and the result on success.
+            and return the success and the result on success.
         """
         r = Request(
             method=method,
@@ -238,21 +256,3 @@ class Bitbucket(object):
         repo_slug = repo_slug or self.repo_slug or ''
         url = self.url('GET_BRANCHES', username=self.username, repo_slug=repo_slug)
         return self.dispatch('GET', url, auth=self.auth)
-
-    #  ========
-    #  = URLs =
-    #  ========
-    URLS = {
-        'BASE': 'https://bitbucket.org/!api/1.0/%s',
-        # Get user profile and repos
-        'GET_USER': 'users/%(username)s/',
-        # Search repo
-        # 'SEARCH_REPO': 'repositories/?name=%(search)s',
-        # Get tags & branches
-        'GET_TAGS': 'repositories/%(username)s/%(repo_slug)s/tags/',
-        'GET_BRANCHES': 'repositories/%(username)s/%(repo_slug)s/branches/',
-
-        'REQUEST_TOKEN': 'oauth/request_token/',
-        'AUTHENTICATE': 'oauth/authenticate?oauth_token=%(token)s',
-        'ACCESS_TOKEN': 'oauth/access_token/'
-    }

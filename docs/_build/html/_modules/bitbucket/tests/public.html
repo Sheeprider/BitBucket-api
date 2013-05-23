@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bitbucket.tests.public &mdash; Bitbucket-API 0.4.4dev documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.4.4dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Bitbucket-API 0.4.4dev documentation" href="../../../index.html" />
+    <link rel="up" title="bitbucket" href="../../bitbucket.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Bitbucket-API 0.4.4dev documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../bitbucket.html" accesskey="U">bitbucket</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for bitbucket.tests.public</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># run with `site-packages$&gt; python -m bitbucket.tests.public`</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">bitbucket.bitbucket</span> <span class="kn">import</span> <span class="n">Bitbucket</span>
+
+
+<span class="n">httpbin</span> <span class="o">=</span> <span class="s">&#39;http://httpbin.org/&#39;</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="s">u&#39;foo&#39;</span>
+<span class="n">bar</span> <span class="o">=</span> <span class="s">u&#39;bar&#39;</span>
+<span class="n">username</span> <span class="o">=</span> <span class="s">&#39;baptistemillou&#39;</span>
+
+
+<div class="viewcode-block" id="AnonymousBitbucketTest"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.AnonymousBitbucketTest">[docs]</a><span class="k">class</span> <span class="nc">AnonymousBitbucketTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Bitbucket test base class.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AnonymousBitbucketTest.setUp"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.AnonymousBitbucketTest.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creating a new annonymous Bitbucket...&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bb</span> <span class="o">=</span> <span class="n">Bitbucket</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="AnonymousBitbucketTest.tearDown"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.AnonymousBitbucketTest.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Destroying the Bitbucket...&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bb</span> <span class="o">=</span> <span class="bp">None</span>
+
+</div></div>
+<div class="viewcode-block" id="BitbucketUtilitiesTest"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketUtilitiesTest">[docs]</a><span class="k">class</span> <span class="nc">BitbucketUtilitiesTest</span><span class="p">(</span><span class="n">AnonymousBitbucketTest</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Testing Bitbucket utilities functions.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BitbucketUtilitiesTest.test_default_credential"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketUtilitiesTest.test_default_credential">[docs]</a>    <span class="k">def</span> <span class="nf">test_default_credential</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">repo_slug</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BitbucketUtilitiesTest.test_dispatch_get"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketUtilitiesTest.test_dispatch_get">[docs]</a>    <span class="k">def</span> <span class="nf">test_dispatch_get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">httpbin</span> <span class="o">+</span> <span class="s">&#39;get&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BitbucketUtilitiesTest.test_dispatch_post"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketUtilitiesTest.test_dispatch_post">[docs]</a>    <span class="k">def</span> <span class="nf">test_dispatch_post</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="n">httpbin</span> <span class="o">+</span> <span class="s">&#39;post&#39;</span><span class="p">,</span> <span class="n">foo</span><span class="o">=</span><span class="s">&#39;bar&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s">&#39;form&#39;</span><span class="p">],</span> <span class="p">{</span><span class="n">foo</span><span class="p">:</span> <span class="n">bar</span><span class="p">})</span>
+</div>
+<div class="viewcode-block" id="BitbucketUtilitiesTest.test_dispatch_put"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketUtilitiesTest.test_dispatch_put">[docs]</a>    <span class="k">def</span> <span class="nf">test_dispatch_put</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s">&#39;PUT&#39;</span><span class="p">,</span> <span class="n">httpbin</span> <span class="o">+</span> <span class="s">&#39;put&#39;</span><span class="p">,</span> <span class="n">foo</span><span class="o">=</span><span class="s">&#39;bar&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s">&#39;form&#39;</span><span class="p">],</span> <span class="p">{</span><span class="n">foo</span><span class="p">:</span> <span class="n">bar</span><span class="p">})</span>
+</div>
+<div class="viewcode-block" id="BitbucketUtilitiesTest.test_dispatch_delete"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketUtilitiesTest.test_dispatch_delete">[docs]</a>    <span class="k">def</span> <span class="nf">test_dispatch_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s">&#39;DELETE&#39;</span><span class="p">,</span> <span class="n">httpbin</span> <span class="o">+</span> <span class="s">&#39;delete&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BitbucketUtilitiesTest.test_url_simple"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketUtilitiesTest.test_url_simple">[docs]</a>    <span class="k">def</span> <span class="nf">test_url_simple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">URLS</span><span class="p">[</span><span class="s">&#39;BASE&#39;</span><span class="p">]</span>
+        <span class="n">create_repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">URLS</span><span class="p">[</span><span class="s">&#39;CREATE_REPO&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">url</span><span class="p">(</span><span class="s">&#39;CREATE_REPO&#39;</span><span class="p">),</span> <span class="n">base</span> <span class="o">%</span> <span class="n">create_repo</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BitbucketUtilitiesTest.test_url_complex"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketUtilitiesTest.test_url_complex">[docs]</a>    <span class="k">def</span> <span class="nf">test_url_complex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">URLS</span><span class="p">[</span><span class="s">&#39;BASE&#39;</span><span class="p">]</span>
+        <span class="n">get_branches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">URLS</span><span class="p">[</span><span class="s">&#39;GET_BRANCHES&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">url</span><span class="p">(</span><span class="s">&#39;GET_BRANCHES&#39;</span><span class="p">,</span>
+                <span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
+                <span class="n">repo_slug</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">repo_slug</span><span class="p">),</span>
+            <span class="n">base</span> <span class="o">%</span> <span class="n">get_branches</span> <span class="o">%</span> <span class="p">{</span><span class="s">&#39;username&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;repo_slug&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span><span class="p">})</span>
+</div>
+<div class="viewcode-block" id="BitbucketUtilitiesTest.test_auth"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketUtilitiesTest.test_auth">[docs]</a>    <span class="k">def</span> <span class="nf">test_auth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">password</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="BitbucketUtilitiesTest.test_username"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketUtilitiesTest.test_username">[docs]</a>    <span class="k">def</span> <span class="nf">test_username</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">foo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">foo</span><span class="p">)</span>
+
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">username</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">AttributeError</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">username</span>
+</div>
+<div class="viewcode-block" id="BitbucketUtilitiesTest.test_password"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketUtilitiesTest.test_password">[docs]</a>    <span class="k">def</span> <span class="nf">test_password</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">foo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="n">foo</span><span class="p">)</span>
+
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">password</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">AttributeError</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">password</span>
+</div>
+<div class="viewcode-block" id="BitbucketUtilitiesTest.test_repo_slug"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketUtilitiesTest.test_repo_slug">[docs]</a>    <span class="k">def</span> <span class="nf">test_repo_slug</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">repo_slug</span> <span class="o">=</span> <span class="n">foo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">repo_slug</span><span class="p">,</span> <span class="n">foo</span><span class="p">)</span>
+
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">repo_slug</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">AttributeError</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">repo_slug</span>
+
+</div></div>
+<div class="viewcode-block" id="BitbucketAnnonymousMethodsTest"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketAnnonymousMethodsTest">[docs]</a><span class="k">class</span> <span class="nc">BitbucketAnnonymousMethodsTest</span><span class="p">(</span><span class="n">AnonymousBitbucketTest</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Testing Bitbucket annonymous methods.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BitbucketAnnonymousMethodsTest.test_get_user"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_user">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Test get_user on specific user.&quot;&quot;&quot;</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BitbucketAnnonymousMethodsTest.test_get_self_user"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_self_user">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_self_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Test get_user on self username.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">get_user</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BitbucketAnnonymousMethodsTest.test_get_none_user"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_none_user">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_none_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Test get_user with no username.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">get_user</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s">&#39;Service not found.&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BitbucketAnnonymousMethodsTest.test_get_public_repos"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_public_repos">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_public_repos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Test public_repos on specific user.&quot;&quot;&quot;</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">repository</span><span class="o">.</span><span class="n">public</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="BitbucketAnnonymousMethodsTest.test_get_self_public_repos"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_self_public_repos">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_self_public_repos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Test public_repos on specific user.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">repository</span><span class="o">.</span><span class="n">public</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="BitbucketAnnonymousMethodsTest.test_get_none_public_repos"><a class="viewcode-back" href="../../../bitbucket.tests.html#bitbucket.tests.public.BitbucketAnnonymousMethodsTest.test_get_none_public_repos">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_none_public_repos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Test public_repos on specific user.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bb</span><span class="o">.</span><span class="n">repository</span><span class="o">.</span><span class="n">public</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s">&#39;Service not found.&#39;</span><span class="p">)</span>
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">Bitbucket-API 0.4.4dev documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../bitbucket.html" >bitbucket</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Baptiste Millou.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

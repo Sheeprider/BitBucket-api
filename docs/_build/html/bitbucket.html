@@ -1,0 +1,566 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bitbucket Package &mdash; Bitbucket-API 0.4.4dev documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4.4dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Bitbucket-API 0.4.4dev documentation" href="index.html" />
+    <link rel="next" title="tests Package" href="bitbucket.tests.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="bitbucket.tests.html" title="tests Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="usage.html" title="Usage"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Bitbucket-API 0.4.4dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="bitbucket-package">
+<h1>bitbucket Package<a class="headerlink" href="#bitbucket-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><a class="reference internal" href="#module-bitbucket" title="bitbucket"><tt class="xref py py-mod docutils literal"><span class="pre">bitbucket</span></tt></a> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-bitbucket"></span><p>Bitbucket has a REST API publicly available, this package provide methods to interact with it.
+It allows you to access repositories and perform various actions on them.</p>
+<p>Various usages :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">bitbucket.bitbucket</span> <span class="kn">import</span> <span class="n">Bitbucket</span>
+
+<span class="c"># Access a public repository</span>
+<span class="n">bb</span> <span class="o">=</span> <span class="n">Bitbucket</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">repo_name_or_slug</span><span class="o">=</span><span class="s">&quot;public_repository&quot;</span><span class="p">)</span>
+
+<span class="c"># Access a private repository</span>
+<span class="n">bb</span> <span class="o">=</span> <span class="n">Bitbucket</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">PASSWORD</span><span class="p">,</span> <span class="n">repo_name_or_slug</span><span class="o">=</span><span class="s">&quot;private_repository&quot;</span><span class="p">)</span>
+
+<span class="c"># Access a private repository through oauth</span>
+<span class="n">bb</span> <span class="o">=</span> <span class="n">Bitbucket</span><span class="p">(</span><span class="n">USERNAME</span><span class="p">,</span> <span class="n">repo_name_or_slug</span><span class="o">=</span><span class="s">&quot;public_repository&quot;</span><span class="p">)</span>
+<span class="n">bb</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="n">CONSUMER_KEY</span><span class="p">,</span> <span class="n">CONSUMER_SECRET</span><span class="p">,</span> <span class="s">&#39;http://localhost/&#39;</span><span class="p">)</span>
+
+
+<span class="c"># Access your working repository</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">repository</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+<span class="c"># Create a repository, and define it as your working repository</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">repository</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s">&quot;repository_slug&quot;</span><span class="p">)</span>
+<span class="n">bb</span><span class="o">.</span><span class="n">repo_slug</span> <span class="o">=</span> <span class="s">&quot;repository_slug&quot;</span>
+
+<span class="c"># Update your working repository</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">repository</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">&#39;new description&#39;</span><span class="p">)</span>
+
+<span class="c"># Delete a repository</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">repository</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s">&quot;repository_slug&quot;</span><span class="p">)</span>
+
+<span class="c"># Download a repository as an archive</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">archive_path</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">repository</span><span class="o">.</span><span class="n">archive</span><span class="p">()</span>
+
+<span class="c"># Access user informations</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">USERNAME</span><span class="p">)</span>
+
+<span class="c"># Access tags and branches</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">get_tags</span><span class="p">()</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">get_branches</span><span class="p">()</span>
+
+<span class="c"># Access, create, update or delete a service (hook)</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">service_id</span><span class="o">=</span><span class="n">SERVICE_ID</span><span class="p">)</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">service</span><span class="o">=</span><span class="s">u&#39;POST&#39;</span><span class="p">,</span> <span class="n">URL</span><span class="o">=</span><span class="s">&#39;http://httpbin.org/&#39;</span><span class="p">)</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">service_id</span><span class="o">=</span><span class="n">SERVICE_ID</span><span class="p">,</span> <span class="n">URL</span><span class="o">=</span><span class="s">&#39;http://google.com&#39;</span><span class="p">)</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">service_id</span><span class="o">=</span><span class="n">SERVICE_ID</span><span class="p">)</span>
+
+<span class="c"># Access, create or delete an SSH key</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key_id</span><span class="o">=</span><span class="n">SSH_ID</span><span class="p">)</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s">r&#39;ssh-rsa a1b2c3d4e5&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">u&#39;my key&#39;</span><span class="p">)</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">key_id</span><span class="o">=</span><span class="n">SSH_ID</span><span class="p">)</span>
+
+<span class="c"># Access, create, update or delete an issue</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">issue_id</span><span class="o">=</span><span class="n">ISSUE_ID</span><span class="p">)</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="s">u&#39;Issue title&#39;</span><span class="p">,</span>
+    <span class="n">content</span><span class="o">=</span><span class="s">u&#39;Issue content&#39;</span><span class="p">,</span>
+    <span class="n">responsible</span><span class="o">=</span><span class="n">bb</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
+    <span class="n">status</span><span class="o">=</span><span class="s">u&#39;new&#39;</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s">u&#39;bug&#39;</span><span class="p">)</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">issue_id</span><span class="o">=</span><span class="n">ISSUE_ID</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="s">&#39;New content&#39;</span><span class="p">)</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">issue_id</span><span class="o">=</span><span class="n">ISSUE_ID</span><span class="p">)</span>
+
+<span class="c"># Access, create, update or delete an issue comment</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">comment</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">comment_id</span><span class="o">=</span><span class="n">COMMENT_ID</span><span class="p">)</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">comment</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="s">&#39;Content&#39;</span><span class="p">)</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">comment</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+    <span class="n">comment_id</span><span class="o">=</span><span class="n">COMMENT_ID</span><span class="p">,</span>
+    <span class="n">content</span><span class="o">=</span><span class="s">&#39;New content&#39;</span><span class="p">)</span>
+<span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">issue</span><span class="o">.</span><span class="n">comment</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">comment_id</span><span class="o">=</span><span class="n">COMMENT_ID</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="module-bitbucket.bitbucket">
+<span id="bitbucket-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">Bitbucket</span></tt> Module<a class="headerlink" href="#module-bitbucket.bitbucket" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bitbucket.bitbucket.Bitbucket">
+<em class="property">class </em><tt class="descclassname">bitbucket.bitbucket.</tt><tt class="descname">Bitbucket</tt><big>(</big><em>username=''</em>, <em>password=''</em>, <em>repo_name_or_slug=''</em><big>)</big><a class="reference internal" href="_modules/bitbucket/bitbucket.html#Bitbucket"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.bitbucket.Bitbucket" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class lets you interact with the bitbucket public API.</p>
+<dl class="attribute">
+<dt id="bitbucket.bitbucket.Bitbucket.auth">
+<tt class="descname">auth</tt><a class="reference internal" href="_modules/bitbucket/bitbucket.html#Bitbucket.auth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.bitbucket.Bitbucket.auth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return credentials for current Bitbucket user.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.bitbucket.Bitbucket.authorize">
+<tt class="descname">authorize</tt><big>(</big><em>consumer_key</em>, <em>consumer_secret</em>, <em>callback_url=None</em>, <em>access_token=None</em>, <em>access_token_secret=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/bitbucket.html#Bitbucket.authorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.bitbucket.Bitbucket.authorize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call this with your consumer key, secret and callback URL, to generate a token for verification.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.bitbucket.Bitbucket.dispatch">
+<tt class="descname">dispatch</tt><big>(</big><em>method</em>, <em>url</em>, <em>auth=None</em>, <em>params=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/bitbucket/bitbucket.html#Bitbucket.dispatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.bitbucket.Bitbucket.dispatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send HTTP request, with given method,
+credentials and data to the given URL,
+and return the success and the result on success.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.bitbucket.Bitbucket.finalize_oauth">
+<tt class="descname">finalize_oauth</tt><big>(</big><em>access_token</em>, <em>access_token_secret</em><big>)</big><a class="reference internal" href="_modules/bitbucket/bitbucket.html#Bitbucket.finalize_oauth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.bitbucket.Bitbucket.finalize_oauth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called internally once auth process is complete.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.bitbucket.Bitbucket.get_branches">
+<tt class="descname">get_branches</tt><big>(</big><em>repo_slug=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/bitbucket.html#Bitbucket.get_branches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.bitbucket.Bitbucket.get_branches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a single repository on Bitbucket and return its branches.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.bitbucket.Bitbucket.get_tags">
+<tt class="descname">get_tags</tt><big>(</big><em>repo_slug=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/bitbucket.html#Bitbucket.get_tags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.bitbucket.Bitbucket.get_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a single repository on Bitbucket and return its tags.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.bitbucket.Bitbucket.get_user">
+<tt class="descname">get_user</tt><big>(</big><em>username=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/bitbucket.html#Bitbucket.get_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.bitbucket.Bitbucket.get_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns user informations.
+If username is not defined, tries to return own informations.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bitbucket.bitbucket.Bitbucket.password">
+<tt class="descname">password</tt><a class="reference internal" href="_modules/bitbucket/bitbucket.html#Bitbucket.password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.bitbucket.Bitbucket.password" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return your repository&#8217;s password.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bitbucket.bitbucket.Bitbucket.repo_slug">
+<tt class="descname">repo_slug</tt><a class="reference internal" href="_modules/bitbucket/bitbucket.html#Bitbucket.repo_slug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.bitbucket.Bitbucket.repo_slug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return your repository&#8217;s slug name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.bitbucket.Bitbucket.url">
+<tt class="descname">url</tt><big>(</big><em>action</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/bitbucket/bitbucket.html#Bitbucket.url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.bitbucket.Bitbucket.url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct and return the URL for a specific API service.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bitbucket.bitbucket.Bitbucket.username">
+<tt class="descname">username</tt><a class="reference internal" href="_modules/bitbucket/bitbucket.html#Bitbucket.username"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.bitbucket.Bitbucket.username" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return your repository&#8217;s username.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.bitbucket.Bitbucket.verify">
+<tt class="descname">verify</tt><big>(</big><em>verifier</em>, <em>consumer_key=None</em>, <em>consumer_secret=None</em>, <em>access_token=None</em>, <em>access_token_secret=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/bitbucket.html#Bitbucket.verify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.bitbucket.Bitbucket.verify" title="Permalink to this definition">¶</a></dt>
+<dd><p>After converting the token into verifier, call this to finalize the authorization.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-bitbucket.issue">
+<span id="issue-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">issue</span></tt> Module<a class="headerlink" href="#module-bitbucket.issue" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bitbucket.issue.Issue">
+<em class="property">class </em><tt class="descclassname">bitbucket.issue.</tt><tt class="descname">Issue</tt><big>(</big><em>bitbucket</em>, <em>issue_id=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/issue.html#Issue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.issue.Issue" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provide issue-related methods to Bitbucket objects.</p>
+<dl class="method">
+<dt id="bitbucket.issue.Issue.all">
+<tt class="descname">all</tt><big>(</big><em>repo_slug=None</em>, <em>params=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/issue.html#Issue.all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.issue.Issue.all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get issues from one of your repositories.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.issue.Issue.create">
+<tt class="descname">create</tt><big>(</big><em>repo_slug=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/bitbucket/issue.html#Issue.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.issue.Issue.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an issue to one of your repositories.
+Each issue require a different set of attributes,
+you can pass them as keyword arguments (attributename=&#8217;attributevalue&#8217;).
+Attributes are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>title: The title of the new issue.</li>
+<li>content: The content of the new issue.</li>
+<li>component: The component associated with the issue.</li>
+<li>milestone: The milestone associated with the issue.</li>
+<li>version: The version associated with the issue.</li>
+<li>responsible: The username of the person responsible for the issue.</li>
+<li>status: The status of the issue (new, open, resolved, on hold, invalid, duplicate, or wontfix).</li>
+<li>kind: The kind of issue (bug, enhancement, or proposal).</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.issue.Issue.delete">
+<tt class="descname">delete</tt><big>(</big><em>issue_id</em>, <em>repo_slug=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/issue.html#Issue.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.issue.Issue.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete an issue from one of your repositories.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.issue.Issue.get">
+<tt class="descname">get</tt><big>(</big><em>issue_id</em>, <em>repo_slug=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/issue.html#Issue.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.issue.Issue.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an issue from one of your repositories.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bitbucket.issue.Issue.issue_id">
+<tt class="descname">issue_id</tt><a class="reference internal" href="_modules/bitbucket/issue.html#Issue.issue_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.issue.Issue.issue_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Your repository slug name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.issue.Issue.update">
+<tt class="descname">update</tt><big>(</big><em>issue_id</em>, <em>repo_slug=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/bitbucket/issue.html#Issue.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.issue.Issue.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update an issue to one of your repositories.
+Each issue require a different set of attributes,
+you can pass them as keyword arguments (attributename=&#8217;attributevalue&#8217;).
+Attributes are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>title: The title of the new issue.</li>
+<li>content: The content of the new issue.</li>
+<li>component: The component associated with the issue.</li>
+<li>milestone: The milestone associated with the issue.</li>
+<li>version: The version associated with the issue.</li>
+<li>responsible: The username of the person responsible for the issue.</li>
+<li>status: The status of the issue (new, open, resolved, on hold, invalid, duplicate, or wontfix).</li>
+<li>kind: The kind of issue (bug, enhancement, or proposal).</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-bitbucket.issue_comment">
+<span id="issue-comment-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">issue_comment</span></tt> Module<a class="headerlink" href="#module-bitbucket.issue_comment" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bitbucket.issue_comment.IssueComment">
+<em class="property">class </em><tt class="descclassname">bitbucket.issue_comment.</tt><tt class="descname">IssueComment</tt><big>(</big><em>issue</em><big>)</big><a class="reference internal" href="_modules/bitbucket/issue_comment.html#IssueComment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.issue_comment.IssueComment" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provide issue&#8217;s comments related methods to Bitbucket objects.</p>
+<dl class="method">
+<dt id="bitbucket.issue_comment.IssueComment.all">
+<tt class="descname">all</tt><big>(</big><em>issue_id=None</em>, <em>repo_slug=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/issue_comment.html#IssueComment.all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.issue_comment.IssueComment.all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get issue comments from one of your repositories.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.issue_comment.IssueComment.create">
+<tt class="descname">create</tt><big>(</big><em>issue_id=None</em>, <em>repo_slug=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/bitbucket/issue_comment.html#IssueComment.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.issue_comment.IssueComment.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an issue comment to one of your repositories.
+Each issue comment require only the content data field
+the system autopopulate the rest.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.issue_comment.IssueComment.delete">
+<tt class="descname">delete</tt><big>(</big><em>comment_id</em>, <em>issue_id=None</em>, <em>repo_slug=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/issue_comment.html#IssueComment.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.issue_comment.IssueComment.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete an issue from one of your repositories.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.issue_comment.IssueComment.get">
+<tt class="descname">get</tt><big>(</big><em>comment_id</em>, <em>issue_id=None</em>, <em>repo_slug=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/issue_comment.html#IssueComment.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.issue_comment.IssueComment.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an issue from one of your repositories.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.issue_comment.IssueComment.update">
+<tt class="descname">update</tt><big>(</big><em>comment_id</em>, <em>issue_id=None</em>, <em>repo_slug=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/bitbucket/issue_comment.html#IssueComment.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.issue_comment.IssueComment.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update an issue comment in one of your repositories.
+Each issue comment require only the content data field
+the system autopopulate the rest.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-bitbucket.repository">
+<span id="repository-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">repository</span></tt> Module<a class="headerlink" href="#module-bitbucket.repository" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bitbucket.repository.Repository">
+<em class="property">class </em><tt class="descclassname">bitbucket.repository.</tt><tt class="descname">Repository</tt><big>(</big><em>bitbucket</em><big>)</big><a class="reference internal" href="_modules/bitbucket/repository.html#Repository"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.repository.Repository" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provide repository-related methods to Bitbucket objects.</p>
+<dl class="method">
+<dt id="bitbucket.repository.Repository.all">
+<tt class="descname">all</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/repository.html#Repository.all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.repository.Repository.all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return own repositories.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.repository.Repository.archive">
+<tt class="descname">archive</tt><big>(</big><em>repo_slug=None</em>, <em>format='zip'</em>, <em>prefix=''</em><big>)</big><a class="reference internal" href="_modules/bitbucket/repository.html#Repository.archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.repository.Repository.archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get one of your repositories and compress it as an archive.
+Return the path of the archive.</p>
+<p>format parameter is curently not supported.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.repository.Repository.create">
+<tt class="descname">create</tt><big>(</big><em>repo_name</em>, <em>scm='git'</em>, <em>private=True</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/bitbucket/repository.html#Repository.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.repository.Repository.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new repository on own Bitbucket account and return it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.repository.Repository.delete">
+<tt class="descname">delete</tt><big>(</big><em>repo_slug=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/repository.html#Repository.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.repository.Repository.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a repository on own Bitbucket account.
+Please use with caution as there is NO confimation and NO undo.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.repository.Repository.get">
+<tt class="descname">get</tt><big>(</big><em>repo_slug=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/repository.html#Repository.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.repository.Repository.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a single repository on Bitbucket and return it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.repository.Repository.public">
+<tt class="descname">public</tt><big>(</big><em>username=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/repository.html#Repository.public"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.repository.Repository.public" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all public repositories from an user.
+If username is not defined, tries to return own public repos.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.repository.Repository.update">
+<tt class="descname">update</tt><big>(</big><em>repo_slug=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/bitbucket/repository.html#Repository.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.repository.Repository.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates repository on own Bitbucket account and return it.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-bitbucket.service">
+<span id="service-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">service</span></tt> Module<a class="headerlink" href="#module-bitbucket.service" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bitbucket.service.Service">
+<em class="property">class </em><tt class="descclassname">bitbucket.service.</tt><tt class="descname">Service</tt><big>(</big><em>bitbucket</em><big>)</big><a class="reference internal" href="_modules/bitbucket/service.html#Service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.service.Service" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provide services-related methods to Bitbucket objects.</p>
+<dl class="method">
+<dt id="bitbucket.service.Service.all">
+<tt class="descname">all</tt><big>(</big><em>repo_slug=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/service.html#Service.all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.service.Service.all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all services (hook) from one of your repositories.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.service.Service.create">
+<tt class="descname">create</tt><big>(</big><em>service</em>, <em>repo_slug=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/bitbucket/service.html#Service.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.service.Service.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a service (hook) to one of your repositories.
+Each type of service require a different set of additionnal fields,
+you can pass them as keyword arguments (fieldname=&#8217;fieldvalue&#8217;).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.service.Service.delete">
+<tt class="descname">delete</tt><big>(</big><em>service_id</em>, <em>repo_slug=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/service.html#Service.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.service.Service.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a service (hook) from one of your repositories.
+Please use with caution as there is NO confimation and NO undo.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.service.Service.get">
+<tt class="descname">get</tt><big>(</big><em>service_id</em>, <em>repo_slug=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/service.html#Service.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.service.Service.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a service (hook) from one of your repositories.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.service.Service.update">
+<tt class="descname">update</tt><big>(</big><em>service_id</em>, <em>repo_slug=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/bitbucket/service.html#Service.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.service.Service.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update a service (hook) from one of your repositories.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-bitbucket.ssh">
+<span id="ssh-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">ssh</span></tt> Module<a class="headerlink" href="#module-bitbucket.ssh" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bitbucket.ssh.SSH">
+<em class="property">class </em><tt class="descclassname">bitbucket.ssh.</tt><tt class="descname">SSH</tt><big>(</big><em>bitbucket</em><big>)</big><a class="reference internal" href="_modules/bitbucket/ssh.html#SSH"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.ssh.SSH" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provide ssh-related methods to Bitbucket objects.</p>
+<dl class="method">
+<dt id="bitbucket.ssh.SSH.all">
+<tt class="descname">all</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/bitbucket/ssh.html#SSH.all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.ssh.SSH.all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all ssh keys associated with your account.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.ssh.SSH.create">
+<tt class="descname">create</tt><big>(</big><em>key=None</em>, <em>label=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/ssh.html#SSH.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.ssh.SSH.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Associate an ssh key with your account and return it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.ssh.SSH.delete">
+<tt class="descname">delete</tt><big>(</big><em>key_id=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/ssh.html#SSH.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.ssh.SSH.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete one of the ssh keys associated with your account.
+Please use with caution as there is NO confimation and NO undo.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bitbucket.ssh.SSH.get">
+<tt class="descname">get</tt><big>(</big><em>key_id=None</em><big>)</big><a class="reference internal" href="_modules/bitbucket/ssh.html#SSH.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bitbucket.ssh.SSH.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get one of the ssh keys associated with your account.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bitbucket.tests.html">tests Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bitbucket.tests.html#id1"><tt class="docutils literal"><span class="pre">tests</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bitbucket.tests.html#module-bitbucket.tests.public"><tt class="docutils literal"><span class="pre">public</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bitbucket.tests.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bitbucket.tests.private.html">private Package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="bitbucket.tests.private.html#id1"><tt class="docutils literal"><span class="pre">private</span></tt> Package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitbucket.tests.private.html#module-bitbucket.tests.private.__main__"><tt class="docutils literal"><span class="pre">__main__</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitbucket.tests.private.html#module-bitbucket.tests.private.issue"><tt class="docutils literal"><span class="pre">issue</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitbucket.tests.private.html#module-bitbucket.tests.private.issue_comment"><tt class="docutils literal"><span class="pre">issue_comment</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitbucket.tests.private.html#module-bitbucket.tests.private.private"><tt class="docutils literal"><span class="pre">private</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitbucket.tests.private.html#module-bitbucket.tests.private.repository"><tt class="docutils literal"><span class="pre">repository</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitbucket.tests.private.html#module-bitbucket.tests.private.service"><tt class="docutils literal"><span class="pre">service</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitbucket.tests.private.html#settings-module"><tt class="docutils literal"><span class="pre">settings</span></tt> Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bitbucket.tests.private.html#module-bitbucket.tests.private.ssh"><tt class="docutils literal"><span class="pre">ssh</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">bitbucket Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">bitbucket</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-bitbucket.bitbucket"><tt class="docutils literal"><span class="pre">Bitbucket</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-bitbucket.issue"><tt class="docutils literal"><span class="pre">issue</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-bitbucket.issue_comment"><tt class="docutils literal"><span class="pre">issue_comment</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-bitbucket.repository"><tt class="docutils literal"><span class="pre">repository</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-bitbucket.service"><tt class="docutils literal"><span class="pre">service</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-bitbucket.ssh"><tt class="docutils literal"><span class="pre">ssh</span></tt> Module</a></li>
+<li><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="usage.html"
+                        title="previous chapter">Usage</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="bitbucket.tests.html"
+                        title="next chapter">tests Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/bitbucket.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="bitbucket.tests.html" title="tests Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="usage.html" title="Usage"
+             >previous</a> |</li>
+        <li><a href="index.html">Bitbucket-API 0.4.4dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Baptiste Millou.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
