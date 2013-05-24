@@ -13,3 +13,6 @@ bitbucket/tests/private/settings.py
 .pydevproject
 .settings/
 build/
+
+# Ignore doc binaries
+docs/_build/doctrees/
