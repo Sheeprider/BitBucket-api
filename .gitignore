@@ -14,5 +14,5 @@ bitbucket/tests/private/settings.py
 .settings/
 build/
 
-# Ignore doc binaries
-docs/_build/doctrees/
+# Ignore doc generated files
+docs/_build/

@@ -1,7 +1,0 @@
-bitbucket
-=========
-
-.. toctree::
-   :maxdepth: 4
-
-   bitbucket
