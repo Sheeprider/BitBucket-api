@@ -1,8 +1,8 @@
 Installation
------------
+------------
 
 Pip
-^^^^^^^^^^^^^^^^
+^^^
 Installing Bitbucket-API is simple with pip: ::
 
 	pip install Bitbucket-API
