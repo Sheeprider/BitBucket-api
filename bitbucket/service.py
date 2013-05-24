@@ -1,4 +1,13 @@
 # -*- coding: utf-8 -*-
+URLS = {
+    # Get services (hooks)
+    'GET_SERVICE': 'repositories/%(username)s/%(repo_slug)s/services/%(service_id)s/',
+    'GET_SERVICES': 'repositories/%(username)s/%(repo_slug)s/services/',
+    # Set services (hooks)
+    'SET_SERVICE': 'repositories/%(username)s/%(repo_slug)s/services/',
+    'UPDATE_SERVICE': 'repositories/%(username)s/%(repo_slug)s/services/%(service_id)s/',
+    'DELETE_SERVICE': 'repositories/%(username)s/%(repo_slug)s/services/%(service_id)s/',
+}
 
 
 class Service(object):
@@ -6,7 +15,7 @@ class Service(object):
 
     def __init__(self, bitbucket):
         self.bitbucket = bitbucket
-        self.bitbucket.URLS.update(self.URLS)
+        self.bitbucket.URLS.update(URLS)
 
     def create(self, service, repo_slug=None, **kwargs):
         """ Add a service (hook) to one of your repositories.
@@ -45,16 +54,6 @@ class Service(object):
         repo_slug = repo_slug or self.bitbucket.repo_slug or ''
         url = self.bitbucket.url('GET_SERVICES', username=self.bitbucket.username, repo_slug=repo_slug)
         return self.bitbucket.dispatch('GET', url, auth=self.bitbucket.auth)
-
-    URLS = {
-        # Get services (hooks)
-        'GET_SERVICE': 'repositories/%(username)s/%(repo_slug)s/services/%(service_id)s/',
-        'GET_SERVICES': 'repositories/%(username)s/%(repo_slug)s/services/',
-        # Set services (hooks)
-        'SET_SERVICE': 'repositories/%(username)s/%(repo_slug)s/services/',
-        'UPDATE_SERVICE': 'repositories/%(username)s/%(repo_slug)s/services/%(service_id)s/',
-        'DELETE_SERVICE': 'repositories/%(username)s/%(repo_slug)s/services/%(service_id)s/',
-    }
 
 #  ============
 #  = Services =

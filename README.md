@@ -1,5 +1,4 @@
-BitBucket-API
-============
+#BitBucket-API
 
 [![Build Status](https://secure.travis-ci.org/Sheeprider/BitBucket-api.png)](http://travis-ci.org/Sheeprider/BitBucket-api)
 
@@ -29,3 +28,6 @@ To install bitbucket-api, simply:
 ##Requirements
 
 Bitbucket-api require [requests](https://github.com/kennethreitz/requests), [sh](https://github.com/amoffat/sh) and [requests-oauthlib](https://github.com/requests/requests-oauthlib)to work, but dependencies should be handled by pip.
+
+##Documentation
+Documentation is available on [Read The Docs](https://bitbucket-api.readthedocs.org/en/latest/index.html).

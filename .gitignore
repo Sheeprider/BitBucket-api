@@ -13,3 +13,6 @@ bitbucket/tests/private/settings.py
 .pydevproject
 .settings/
 build/
+
+# Ignore doc generated files
+docs/_build/

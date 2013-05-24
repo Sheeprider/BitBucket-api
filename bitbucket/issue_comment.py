@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-
+URLS = {
+    # Issue comments
+    'GET_COMMENTS': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/',
+    'GET_COMMENT':  'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
+    'CREATE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/',
+    'UPDATE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
+    'DELETE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
+}
 
 
 class IssueComment(object):
@@ -7,7 +15,7 @@ class IssueComment(object):
     def __init__(self, issue):
         self.issue = issue
         self.bitbucket = self.issue.bitbucket
-        self.bitbucket.URLS.update(self.URLS)
+        self.bitbucket.URLS.update(URLS)
         self.issue_id = issue.issue_id
 
     def all(self, issue_id=None, repo_slug=None):
@@ -61,12 +69,3 @@ class IssueComment(object):
                        repo_slug=repo_slug, issue_id=issue_id,
                        comment_id=comment_id)
         return self.bitbucket.dispatch('DELETE', url, auth=self.bitbucket.auth)
-
-    URLS = {
-        # Issue comments
-        'GET_COMMENTS': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/',
-        'GET_COMMENT':  'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
-        'CREATE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/',
-        'UPDATE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
-        'DELETE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
-    }
