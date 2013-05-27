@@ -3,7 +3,6 @@ import unittest
 import webbrowser
 
 from bitbucket.bitbucket import Bitbucket
-from bitbucket.tests.private import USERNAME, PASSWORD, CONSUMER_KEY, CONSUMER_SECRET
 
 TEST_REPO_SLUG = 'test_bitbucket_api'
 
@@ -16,6 +15,20 @@ class AuthenticatedBitbucketTest(unittest.TestCase):
     """ Bitbucket test base class for authenticated methods."""
     def setUp(self):
         """Creating a new authenticated Bitbucket..."""
+        try:
+            # Try and get OAuth credentials first, if that fails try basic auth
+            from settings import USERNAME, CONSUMER_KEY, CONSUMER_SECRET
+            PASSWORD = None
+        except ImportError:
+            try:
+                # TODO : check validity of credentials ?
+                from settings import USERNAME, PASSWORD
+                CONSUMER_KEY = None
+                CONSUMER_SECRET = None
+            except ImportError:
+                # Private tests require username and password of an existing user.
+                raise ImportError('Please provide either USERNAME and PASSWORD or USERNAME, CONSUMER_KEY and CONSUMER_SECRET in bitbucket/tests/private/settings.py.')
+
         if USERNAME and PASSWORD:
             self.bb = Bitbucket(USERNAME, PASSWORD)
         elif USERNAME and CONSUMER_KEY and CONSUMER_SECRET:
