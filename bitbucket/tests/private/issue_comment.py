@@ -6,6 +6,7 @@ class IssueCommentAuthenticatedMethodsTest(AuthenticatedBitbucketTest):
     """ Testing bitbucket.issue.comments methods."""
 
     def setUp(self):
+        """ Add an issue to the test repository and save it's id."""
         super(IssueCommentAuthenticatedMethodsTest, self).setUp()
         # Create an issue.
         success, result = self.bb.issue.create(
@@ -19,7 +20,7 @@ class IssueCommentAuthenticatedMethodsTest(AuthenticatedBitbucketTest):
         self.bb.issue.comment.issue_id = result[u'local_id']
 
     def tearDown(self):
-        # Delete issue.
+        """ Delete the issue."""
         self.bb.issue.delete(issue_id=self.bb.issue.comment.issue_id)
         super(IssueCommentAuthenticatedMethodsTest, self).tearDown()
 

@@ -1,5 +1,5 @@
-private Package
-===============
+bitbucket.tests.private Package
+===============================
 
 :mod:`private` Package
 ----------------------
