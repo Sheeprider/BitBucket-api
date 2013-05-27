@@ -1,23 +1,27 @@
 # -*- coding: utf-8 -*-
+from functools import wraps
+from zipfile import is_zipfile
 import os
 import random
 import sh
 import string
 import unittest
-from zipfile import is_zipfile
 
 from bitbucket.tests.private.private import AuthenticatedBitbucketTest
 
 TEST_REPO_SLUG = "test_repository_creation"
 
 
-def skipUnlessHasGit(obj):
-    # Test git presence
-    try:
-        sh.git(version=True, _out='/dev/null')
-        return lambda func: func
-    except sh.CommandNotFound:
-        return unittest.skip("Git is not installed")
+def skipUnlessHasGit(f):
+    """ This decorator pass the test if git is not found."""
+    @wraps(f)
+    def _decorator():
+        try:
+            sh.git(version=True, _out='/dev/null')
+            return f()
+        except sh.CommandNotFound:
+            return unittest.skip("Git is not installed")
+    return _decorator
 
 
 class RepositoryAuthenticatedMethodsTest(AuthenticatedBitbucketTest):
@@ -77,6 +81,7 @@ class ArchiveRepositoryAuthenticatedMethodsTest(AuthenticatedBitbucketTest):
     """
 
     def setUp(self):
+        """ Clone the test repo locally, then add and push a commit."""
         super(ArchiveRepositoryAuthenticatedMethodsTest, self).setUp()
         # Clone test repository localy.
         repo_origin = 'git@bitbucket.org:%s/%s.git' % (self.bb.username, self.bb.repo_slug)
@@ -96,8 +101,8 @@ class ArchiveRepositoryAuthenticatedMethodsTest(AuthenticatedBitbucketTest):
         sh.git.push('origin', 'master')
 
     def tearDown(self):
+        """ Delete the git folder."""
         super(ArchiveRepositoryAuthenticatedMethodsTest, self).tearDown()
-        # Delete git folder.
         sh.rm('-rf', self.pwd)
 
     @skipUnlessHasGit
