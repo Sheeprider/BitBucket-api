@@ -1,5 +1,5 @@
-tests Package
-=============
+bitbucket.tests Package
+=======================
 
 :mod:`tests` Package
 --------------------
