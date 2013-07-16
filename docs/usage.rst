@@ -36,6 +36,7 @@ Connect using Oauth ::
 	>>>     webbrowser.open(bb.url('AUTHENTICATE', token=bb.access_token))
 	>>>     # Copy the verifier field from the URL in the browser into the console
 	>>>     oauth_verifier = raw_input('Enter verifier from url [oauth_verifier]')
+	>>>     bb.verify(oauth_verifier)
 	>>>     OAUTH_ACCESS_TOKEN = bb.access_token
 	>>>     OAUTH_ACCESS_TOKEN_SECRET = bb.access_token_secret
 	>>> else:
