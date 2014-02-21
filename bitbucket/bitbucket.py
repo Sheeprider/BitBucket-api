@@ -27,6 +27,8 @@ URLS = {
     'GET_USER_PRIVILEGES': 'user/privileges',
     # Search repo
     # 'SEARCH_REPO': 'repositories/?name=%(search)s',
+    # Get Repo
+    'GET_REPO': 'repositories/%(username)s/%(repo_slug)s',
     # Get tags & branches
     'GET_TAGS': 'repositories/%(username)s/%(repo_slug)s/tags/',
     'GET_BRANCHES': 'repositories/%(username)s/%(repo_slug)s/branches/',
@@ -258,7 +260,13 @@ class Bitbucket(object):
         url = self.url('GET_BRANCHES', username=self.username, repo_slug=repo_slug)
         return self.dispatch('GET', url, auth=self.auth)
 
+    def get_repo(self, repo_slug=None):
+        """ Get a single repository on Bitbucket. """
+        repo_slug = repo_slug or self.repo_slug or ''
+        url = self.url('GET_REPO', username=self.username, repo_slug=repo_slug)
+        return self.dispatch('GET', url, auth=self.auth)
+
     def get_privileges(self):
-        """ Get privledges for this user"""
+        """ Get privledges for this user. """
         url = self.url('GET_USER_PRIVILEGES')
         return self.dispatch('GET', url, auth=self.auth)
