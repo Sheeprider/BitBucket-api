@@ -28,8 +28,6 @@ URLS = {
     'GET_USER_PRIVILEGES': 'user/privileges',
     # Search repo
     # 'SEARCH_REPO': 'repositories/?name=%(search)s',
-    # Get Repo
-    'GET_REPO': 'repositories/%(username)s/%(repo_slug)s',
     # Get tags & branches
     'GET_TAGS': 'repositories/%(username)s/%(repo_slug)s/tags/',
     'GET_BRANCHES': 'repositories/%(username)s/%(repo_slug)s/branches/',
