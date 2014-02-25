@@ -15,6 +15,7 @@ from issue import Issue
 from repository import Repository
 from service import Service
 from ssh import SSH
+from deploy_key import DeployKey
 
 
 #  ========
@@ -52,6 +53,7 @@ class Bitbucket(object):
         self.service = Service(self)
         self.ssh = SSH(self)
         self.issue = Issue(self)
+        self.deploy_key = DeployKey(self)
 
         self.access_token = None
         self.access_token_secret = None
@@ -258,12 +260,6 @@ class Bitbucket(object):
         """ Get a single repository on Bitbucket and return its branches."""
         repo_slug = repo_slug or self.repo_slug or ''
         url = self.url('GET_BRANCHES', username=self.username, repo_slug=repo_slug)
-        return self.dispatch('GET', url, auth=self.auth)
-
-    def get_repo(self, repo_slug=None):
-        """ Get a single repository on Bitbucket. """
-        repo_slug = repo_slug or self.repo_slug or ''
-        url = self.url('GET_REPO', username=self.username, repo_slug=repo_slug)
         return self.dispatch('GET', url, auth=self.auth)
 
     def get_privileges(self):
