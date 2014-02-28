@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from issue_comment import IssueComment
+from .issue_comment import IssueComment
 
 
 URLS = {
