@@ -2,7 +2,7 @@
 URLS = {
     # Issue comments
     'GET_COMMENTS': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/',
-    'GET_COMMENT':  'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
+    'GET_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
     'CREATE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/',
     'UPDATE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
     'DELETE_COMMENT': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/comments/%(comment_id)s/',
@@ -23,8 +23,10 @@ class IssueComment(object):
         """
         issue_id = issue_id or self.issue_id
         repo_slug = repo_slug or self.bitbucket.repo_slug or ''
-        url = self.bitbucket.url('GET_COMMENTS', username=self.bitbucket.username,
-                       repo_slug=repo_slug, issue_id=issue_id)
+        url = self.bitbucket.url('GET_COMMENTS',
+                                 username=self.bitbucket.username,
+                                 repo_slug=repo_slug,
+                                 issue_id=issue_id)
         return self.bitbucket.dispatch('GET', url, auth=self.bitbucket.auth)
 
     def get(self, comment_id, issue_id=None, repo_slug=None):
@@ -32,9 +34,11 @@ class IssueComment(object):
         """
         issue_id = issue_id or self.issue_id
         repo_slug = repo_slug or self.bitbucket.repo_slug or ''
-        url = self.bitbucket.url('GET_COMMENT', username=self.bitbucket.username,
-                       repo_slug=repo_slug, issue_id=issue_id,
-                       comment_id=comment_id)
+        url = self.bitbucket.url('GET_COMMENT',
+                                 username=self.bitbucket.username,
+                                 repo_slug=repo_slug,
+                                 issue_id=issue_id,
+                                 comment_id=comment_id)
         return self.bitbucket.dispatch('GET', url, auth=self.bitbucket.auth)
 
     def create(self, issue_id=None, repo_slug=None, **kwargs):
@@ -44,8 +48,10 @@ class IssueComment(object):
         """
         issue_id = issue_id or self.issue_id
         repo_slug = repo_slug or self.bitbucket.repo_slug or ''
-        url = self.bitbucket.url('CREATE_COMMENT', username=self.bitbucket.username,
-                       repo_slug=repo_slug, issue_id=issue_id)
+        url = self.bitbucket.url('CREATE_COMMENT',
+                                 username=self.bitbucket.username,
+                                 repo_slug=repo_slug,
+                                 issue_id=issue_id)
         return self.bitbucket.dispatch('POST', url, auth=self.bitbucket.auth, **kwargs)
 
     def update(self, comment_id, issue_id=None, repo_slug=None, **kwargs):
@@ -55,9 +61,11 @@ class IssueComment(object):
         """
         issue_id = issue_id or self.issue_id
         repo_slug = repo_slug or self.bitbucket.repo_slug or ''
-        url = self.bitbucket.url('UPDATE_COMMENT', username=self.bitbucket.username,
-                       repo_slug=repo_slug, issue_id=issue_id,
-                       comment_id=comment_id)
+        url = self.bitbucket.url('UPDATE_COMMENT',
+                                 username=self.bitbucket.username,
+                                 repo_slug=repo_slug,
+                                 issue_id=issue_id,
+                                 comment_id=comment_id)
         return self.bitbucket.dispatch('PUT', url, auth=self.bitbucket.auth, **kwargs)
 
     def delete(self, comment_id, issue_id=None, repo_slug=None):
@@ -65,7 +73,9 @@ class IssueComment(object):
         """
         issue_id = issue_id or self.issue_id
         repo_slug = repo_slug or self.bitbucket.repo_slug or ''
-        url = self.bitbucket.url('DELETE_COMMENT', username=self.bitbucket.username,
-                       repo_slug=repo_slug, issue_id=issue_id,
-                       comment_id=comment_id)
+        url = self.bitbucket.url('DELETE_COMMENT',
+                                 username=self.bitbucket.username,
+                                 repo_slug=repo_slug,
+                                 issue_id=issue_id,
+                                 comment_id=comment_id)
         return self.bitbucket.dispatch('DELETE', url, auth=self.bitbucket.auth)

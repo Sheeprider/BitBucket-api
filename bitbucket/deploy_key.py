@@ -7,6 +7,7 @@ URLS = {
     'DELETE_DEPLOY_KEY': 'repositories/%(username)s/%(repo_slug)s/deploy-key/%(key_id)s',
 }
 
+
 class DeployKey(object):
     """ This class provide services-related methods to Bitbucket objects."""
 
@@ -40,15 +41,19 @@ class DeployKey(object):
         url = self.bitbucket.url('SET_DEPLOY_KEY',
                                  username=self.bitbucket.username,
                                  repo_slug=repo_slug)
-        return self.bitbucket.dispatch('POST', url,
-            auth=self.bitbucket.auth, key=key, label=label)
+        return self.bitbucket.dispatch('POST',
+                                       url,
+                                       auth=self.bitbucket.auth,
+                                       key=key,
+                                       label=label)
 
     def delete(self, repo_slug=None, key_id=None):
         """ Delete one of the ssh keys associated with your repo.
             Please use with caution as there is NO confimation and NO undo.
         """
         repo_slug = repo_slug or self.bitbucket.repo_slug or ''
-        url = self.bitbucket.url('DELETE_DEPLOY_KEY', key_id=key_id,
-                                  username=self.bitbucket.username,
-                                  repo_slug=repo_slug)
+        url = self.bitbucket.url('DELETE_DEPLOY_KEY',
+                                 key_id=key_id,
+                                 username=self.bitbucket.username,
+                                 repo_slug=repo_slug)
         return self.bitbucket.dispatch('DELETE', url, auth=self.bitbucket.auth)

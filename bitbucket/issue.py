@@ -5,7 +5,7 @@ from issue_comment import IssueComment
 URLS = {
     # Issues
     'GET_ISSUES': 'repositories/%(username)s/%(repo_slug)s/issues/',
-    'GET_ISSUE':  'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
+    'GET_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
     'CREATE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/',
     'UPDATE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
     'DELETE_ISSUE': 'repositories/%(username)s/%(repo_slug)s/issues/%(issue_id)s/',
