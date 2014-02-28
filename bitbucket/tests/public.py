@@ -25,9 +25,9 @@ class BitbucketUtilitiesTest(AnonymousBitbucketTest):
     """ Test Bitbucket utilities functions."""
 
     def test_default_credential(self):
-        self.assertEquals(self.bb.username, '')
-        self.assertEquals(self.bb.password, '')
-        self.assertEquals(self.bb.repo_slug, '')
+        self.assertEqual(self.bb.username, '')
+        self.assertEqual(self.bb.password, '')
+        self.assertEqual(self.bb.repo_slug, '')
 
     def test_dispatch_get(self):
         success, result = self.bb.dispatch('GET', httpbin + 'get')
@@ -38,13 +38,13 @@ class BitbucketUtilitiesTest(AnonymousBitbucketTest):
         success, result = self.bb.dispatch('POST', httpbin + 'post', foo='bar')
         self.assertTrue(success)
         self.assertIsInstance(result, dict)
-        self.assertEquals(result['form'], {foo: bar})
+        self.assertEqual(result['form'], {foo: bar})
 
     def test_dispatch_put(self):
         success, result = self.bb.dispatch('PUT', httpbin + 'put', foo='bar')
         self.assertTrue(success)
         self.assertIsInstance(result, dict)
-        self.assertEquals(result['form'], {foo: bar})
+        self.assertEqual(result['form'], {foo: bar})
 
     def test_dispatch_delete(self):
         success, result = self.bb.dispatch('DELETE', httpbin + 'delete')
@@ -54,23 +54,23 @@ class BitbucketUtilitiesTest(AnonymousBitbucketTest):
     def test_url_simple(self):
         base = self.bb.URLS['BASE']
         create_repo = self.bb.URLS['CREATE_REPO']
-        self.assertEquals(self.bb.url('CREATE_REPO'), base % create_repo)
+        self.assertEqual(self.bb.url('CREATE_REPO'), base % create_repo)
 
     def test_url_complex(self):
         base = self.bb.URLS['BASE']
         get_branches = self.bb.URLS['GET_BRANCHES']
-        self.assertEquals(
+        self.assertEqual(
             self.bb.url('GET_BRANCHES',
                 username=self.bb.username,
                 repo_slug=self.bb.repo_slug),
             base % get_branches % {'username': '', 'repo_slug': ''})
 
     def test_auth(self):
-        self.assertEquals(self.bb.auth, (self.bb.username, self.bb.password))
+        self.assertEqual(self.bb.auth, (self.bb.username, self.bb.password))
 
     def test_username(self):
         self.bb.username = foo
-        self.assertEquals(self.bb.username, foo)
+        self.assertEqual(self.bb.username, foo)
 
         del self.bb.username
         with self.assertRaises(AttributeError):
@@ -78,7 +78,7 @@ class BitbucketUtilitiesTest(AnonymousBitbucketTest):
 
     def test_password(self):
         self.bb.password = foo
-        self.assertEquals(self.bb.password, foo)
+        self.assertEqual(self.bb.password, foo)
 
         del self.bb.password
         with self.assertRaises(AttributeError):
@@ -86,7 +86,7 @@ class BitbucketUtilitiesTest(AnonymousBitbucketTest):
 
     def test_repo_slug(self):
         self.bb.repo_slug = foo
-        self.assertEquals(self.bb.repo_slug, foo)
+        self.assertEqual(self.bb.repo_slug, foo)
 
         del self.bb.repo_slug
         with self.assertRaises(AttributeError):
@@ -114,7 +114,7 @@ class BitbucketAnnonymousMethodsTest(AnonymousBitbucketTest):
         self.bb.username = None
         success, result = self.bb.get_user()
         self.assertFalse(success)
-        self.assertEquals(result, 'Service not found.')
+        self.assertEqual(result, 'Service not found.')
 
     def test_get_public_repos(self):
         """ Test public_repos on specific user."""
@@ -134,7 +134,7 @@ class BitbucketAnnonymousMethodsTest(AnonymousBitbucketTest):
         self.bb.username = None
         success, result = self.bb.repository.public()
         self.assertFalse(success)
-        self.assertEquals(result, 'Service not found.')
+        self.assertEqual(result, 'Service not found.')
 
 if __name__ == "__main__":
     unittest.main()
