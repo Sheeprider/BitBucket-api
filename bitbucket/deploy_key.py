@@ -18,6 +18,7 @@ class DeployKey(object):
     def all(self, repo_slug=None):
         """ Get all ssh keys associated with a repo
         """
+        repo_slug = repo_slug or self.bitbucket.repo_slug or ''
         url = self.bitbucket.url('GET_DEPLOY_KEYS',
                                  username=self.bitbucket.username,
                                  repo_slug=repo_slug)
