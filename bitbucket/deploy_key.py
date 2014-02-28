@@ -3,8 +3,8 @@ URLS = {
     # deploy keys
     'GET_DEPLOY_KEYS': 'repositories/%(username)s/%(repo_slug)s/deploy-keys',
     'SET_DEPLOY_KEY': 'repositories/%(username)s/%(repo_slug)s/deploy-keys',
-    'GET_DEPLOY_KEY': 'repositories/%(username)s/%(repo_slug)s/deploy-key/%(key_id)s',
-    'DELETE_DEPLOY_KEY': 'repositories/%(username)s/%(repo_slug)s/deploy-key/%(key_id)s',
+    'GET_DEPLOY_KEY': 'repositories/%(username)s/%(repo_slug)s/deploy-keys/%(key_id)s',
+    'DELETE_DEPLOY_KEY': 'repositories/%(username)s/%(repo_slug)s/deploy-keys/%(key_id)s',
 }
 
 
