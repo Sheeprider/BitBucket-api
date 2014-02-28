@@ -3,7 +3,11 @@
 
 __all__ = ['Bitbucket', ]
 
-from urlparse import parse_qs
+try:
+    from urlparse import parse_qs
+except ImportError:
+    from urllib.parse import parse_qs
+
 import json
 import re
 
@@ -11,10 +15,10 @@ from requests import Request, Session
 from requests_oauthlib import OAuth1
 import requests
 
-from issue import Issue
-from repository import Repository
-from service import Service
-from ssh import SSH
+from .issue import Issue
+from .repository import Repository
+from .service import Service
+from .ssh import SSH
 
 
 #  ========
@@ -74,8 +78,12 @@ class Bitbucket(object):
 
     @username.setter
     def username(self, value):
-        if isinstance(value, basestring):
-            self._username = unicode(value)
+        try:
+            if isinstance(value, basestring):
+                self._username = unicode(value)
+        except NameError:
+            self._username = value
+
         if value is None:
             self._username = None
 
@@ -90,8 +98,12 @@ class Bitbucket(object):
 
     @password.setter
     def password(self, value):
-        if isinstance(value, basestring):
-            self._password = unicode(value)
+        try:
+            if isinstance(value, basestring):
+                self._password = unicode(value)
+        except NameError:
+            self._password = value
+
         if value is None:
             self._password = None
 
@@ -109,8 +121,11 @@ class Bitbucket(object):
         if value is None:
             self._repo_slug = None
         else:
-            if isinstance(value, basestring):
-                value = unicode(value)
+            try:
+                if isinstance(value, basestring):
+                    value = unicode(value)
+            except NameError:
+                pass
             value = value.lower()
             self._repo_slug = re.sub(r'[^a-z0-9_-]+', '-', value)
 
@@ -122,8 +137,12 @@ class Bitbucket(object):
     #  = Oauth authentication =
     #  ========================
 
-    def authorize(self, consumer_key, consumer_secret, callback_url=None, access_token=None, access_token_secret=None):
-        """ Call this with your consumer key, secret and callback URL, to generate a token for verification. """
+    def authorize(self, consumer_key, consumer_secret, callback_url=None,
+                  access_token=None, access_token_secret=None):
+        """
+        Call this with your consumer key, secret and callback URL, to
+        generate a token for verification.
+        """
         self.consumer_key = consumer_key
         self.consumer_secret = consumer_secret
 
@@ -147,8 +166,12 @@ class Bitbucket(object):
 
         return (True, None)
 
-    def verify(self, verifier, consumer_key=None, consumer_secret=None, access_token=None, access_token_secret=None):
-        """ After converting the token into verifier, call this to finalize the authorization. """
+    def verify(self, verifier, consumer_key=None, consumer_secret=None,
+               access_token=None, access_token_secret=None):
+        """
+        After converting the token into verifier, call this to finalize the
+        authorization.
+        """
         # Stored values can be supplied to verify
         self.consumer_key = consumer_key or self.consumer_key
         self.consumer_secret = consumer_secret or self.consumer_secret
@@ -167,7 +190,8 @@ class Bitbucket(object):
         else:
             return (False, r.content)
 
-        self.finalize_oauth(creds.get('oauth_token')[0], creds.get('oauth_token_secret')[0])
+        self.finalize_oauth(creds.get('oauth_token')[0],
+                            creds.get('oauth_token_secret')[0])
         return (True, None)
 
     def finalize_oauth(self, access_token, access_token_secret):
@@ -254,5 +278,7 @@ class Bitbucket(object):
     def get_branches(self, repo_slug=None):
         """ Get a single repository on Bitbucket and return its branches."""
         repo_slug = repo_slug or self.repo_slug or ''
-        url = self.url('GET_BRANCHES', username=self.username, repo_slug=repo_slug)
+        url = self.url('GET_BRANCHES',
+                       username=self.username,
+                       repo_slug=repo_slug)
         return self.dispatch('GET', url, auth=self.auth)
